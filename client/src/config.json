@@ -1,0 +1,4 @@
+{                       
+    "apiEndPoint" :"http://localhost:3003/api",
+    "cloudinary" : "https://api.cloudinary.com/v1_1/dqry2dgi0/image/upload"
+}

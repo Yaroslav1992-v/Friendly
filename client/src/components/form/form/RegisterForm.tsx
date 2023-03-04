@@ -9,9 +9,14 @@ import {
 } from "../../index";
 import { validator } from "../../../utils/validator";
 import { registerValidator } from "../../../utils/validatorConfig";
+import { useAppDispatch } from "../../../store/createStore";
+import { signUp } from "../../../store/auth";
+import { useSelector } from "react-redux";
+import { getAuthError } from "./../../../store/auth";
 
 export const RegisterForm = () => {
   const [checked, setChecked] = useState<boolean>(false);
+  const authError = useSelector(getAuthError());
   const [errors, setErrors] = useState<Errors>();
   const handleCheck = () => {
     setChecked((prevState) => !prevState);
@@ -20,6 +25,7 @@ export const RegisterForm = () => {
   const handleTerms = () => {
     setTerms((prevState) => !prevState);
   };
+  const dispatch = useAppDispatch();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
@@ -54,7 +60,9 @@ export const RegisterForm = () => {
 
     const errors = validator(userData, registerValidator);
     setErrors(errors);
-    console.log(errors);
+    if (Object.keys(errors).length === 0) {
+      dispatch(signUp(userData));
+    }
   };
   return (
     <>
@@ -67,6 +75,7 @@ export const RegisterForm = () => {
             inputRef={avatarRef}
             error={errors?.image}
           />
+          {authError && <p className="input__error">{authError}</p>}
           <InputField
             error={errors?.name}
             placeholder="Name"
@@ -95,6 +104,7 @@ export const RegisterForm = () => {
 
         <Button color="black" text="Sign Up" />
       </form>
+
       <Terms show={terms} setTerms={handleTerms} />
     </>
   );

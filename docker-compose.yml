@@ -1,0 +1,13 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:4.4.4
+    container_name: friendly
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=Yaroslav
+      - MONGO_INITDB_ROOT_PASSWORD=DgvOlwpfedx7qs6X
+    ports:
+      - 27021:27021
+    volumes:
+      - ./mongo-data-4.4:/data/db
