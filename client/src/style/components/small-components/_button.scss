@@ -1,0 +1,11 @@
+.btn {
+  width: 100%;
+  padding: 15px;
+  font-weight: 600;
+  font-size: 17px;
+  &-black {
+    background-color: $black;
+    color: $white;
+    border-radius: 0px 0px 8px 8px;
+  }
+}

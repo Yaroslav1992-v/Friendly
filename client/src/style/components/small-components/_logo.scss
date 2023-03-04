@@ -1,0 +1,17 @@
+.logo {
+  height: auto;
+  width: auto;
+  &-x-large {
+    svg {
+      height: 50px;
+      width: 175px;
+    }
+  }
+  &-large {
+    margin-bottom: 50px;
+    svg {
+      width: 146px;
+      height: 40px;
+    }
+  }
+}

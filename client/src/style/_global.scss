@@ -1,0 +1,40 @@
+body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+}
+.container,
+.app-container {
+  max-width: 375px;
+  width: 100%;
+  padding: 15px 0;
+  min-height: 100vh;
+  margin: 0 auto;
+  &-primary {
+    background: $background;
+  }
+}
+.app-container {
+  padding: 30px;
+}
+.start {
+  &__container {
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    @include center;
+  }
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  bottom: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}

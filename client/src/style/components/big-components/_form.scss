@@ -1,0 +1,92 @@
+.form-type {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid $grey;
+  box-sizing: content-box;
+  margin-bottom: 50px;
+  &__btn {
+    font-size: 17px;
+    font-weight: 500;
+    padding-bottom: 7px;
+    border-bottom: 2px solid transparent;
+    color: $grey;
+    transition: all 0.5s ease;
+    &:not(:last-child) {
+      margin-right: 25px;
+    }
+  }
+  .active {
+    color: $white;
+    border-color: $white;
+  }
+}
+.form {
+  width: 100%;
+  background-color: $white;
+  border-radius: 8px;
+  &__container {
+    flex-direction: column;
+    @include center;
+    max-width: 343px;
+    padding: 30px 15px;
+  }
+}
+.input {
+  &__box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+  &__error {
+    margin-top: 5px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 15px;
+    color: $red;
+  }
+  &__input {
+    flex: 1;
+    background: $grey-light !important;
+    border-radius: 8px;
+    outline-color: transparent;
+    border: 3px solid transparent;
+    padding: 10px 15px;
+    &-error {
+      border-color: $red;
+    }
+    &:active,
+    &:focus {
+      border-color: $green;
+    }
+
+    &::placeholder {
+      color: $grey;
+      font-size: 17px;
+    }
+  }
+}
+.terms {
+  &__label {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    border: 1px solid $grey;
+    margin-right: 10px;
+    color: $grey;
+    @include center;
+  }
+  &__field {
+    display: flex;
+    .checked {
+      border: transparent;
+    }
+  }
+
+  &__btn {
+    margin-left: 5px;
+    color: $blue;
+  }
+}
