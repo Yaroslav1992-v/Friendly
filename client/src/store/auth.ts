@@ -6,6 +6,7 @@ import { NavigateFunction } from "react-router-dom";
 import { RegisterData, UserData } from "../props/props";
 import { AuthData } from "./../props/props";
 import userService from "../services/userService";
+import fileService from "../services/fileService";
 
 interface AuthState {
   isLoading: boolean;
@@ -67,34 +68,40 @@ export const authSlice = createSlice({
   },
 });
 export const signUp = (payload: RegisterData) => async (dispatch: Dispatch) => {
+  let image: string = "";
   try {
-    const data = await authService.register(payload);
-    console.log(data);
+    if (payload.image) {
+      image = await fileService.uploadFile(payload.image as File);
+    }
+    const data = await authService.register({
+      ...payload,
+      image: image,
+    });
     localStorageService.setTokens({ ...data });
     dispatch(authRequestSuccess({ userId: data._id }));
     dispatch(userRecived(data));
     // navigate("/");
   } catch (error: any) {
-    console.log(error);
     const message = error.response?.data?.message || "Something went wrong";
+    if (image) {
+      await fileService.deleteFile(image);
+    }
     dispatch(authRequestFailed(message));
   }
 };
 const userRequsted = createAction("current user requestd");
-export const signIn =
-  (payload: AuthData, navigate: NavigateFunction) =>
-  async (dispatch: Dispatch) => {
-    try {
-      dispatch(authRequested());
-      const data = await authService.login(payload);
-      localStorageService.setTokens({ ...data });
-      dispatch(authRequestSuccess({ userId: data._id }));
-      navigate("/");
-    } catch (error: any) {
-      const message = error.response?.data?.message || "Something went wrong";
-      dispatch(authRequestFailed(message));
-    }
-  };
+export const signIn = (payload: AuthData) => async (dispatch: Dispatch) => {
+  try {
+    dispatch(authRequested());
+    const data = await authService.login(payload);
+
+    localStorageService.setTokens({ ...data });
+    dispatch(authRequestSuccess({ userId: data._id }));
+  } catch (error: any) {
+    const message = error.response?.data?.message || "Something went wrong";
+    dispatch(authRequestFailed(message));
+  }
+};
 export const loadCurrentUser = () => async (dispatch: Dispatch) => {
   try {
     dispatch(userRequsted());
@@ -131,6 +138,10 @@ export const getCurrentUserId =
   () =>
   (state: { auth: AuthState }): string | null | undefined =>
     state.auth.auth?.userId;
+export const getCurrentUserImage =
+  () =>
+  (state: { auth: AuthState }): string | null | undefined =>
+    state.auth.currentUser?.image;
 
 const { reducer: authReducer, actions } = authSlice;
 const { authRequestSuccess, authRequested, authRequestFailed, userRecived } =

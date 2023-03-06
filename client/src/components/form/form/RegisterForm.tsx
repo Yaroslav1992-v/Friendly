@@ -13,6 +13,7 @@ import { useAppDispatch } from "../../../store/createStore";
 import { signUp } from "../../../store/auth";
 import { useSelector } from "react-redux";
 import { getAuthError } from "./../../../store/auth";
+import fileService from "../../../services/fileService";
 
 export const RegisterForm = () => {
   const [checked, setChecked] = useState<boolean>(false);
@@ -32,12 +33,14 @@ export const RegisterForm = () => {
   const avatarRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
+  const [imageError, setImageError] = useState<Pick<Errors, "image">>();
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files![0];
     if (file.size >= 3125576) {
-      setErrors({ ...errors, image: "Max File Size is 3mb" });
+      setImageError({ image: "Max File Size is 3mb" });
       return;
     }
+
     const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
     if (!allowedExtensions.exec(file.name)) {
       setErrors({
@@ -49,7 +52,20 @@ export const RegisterForm = () => {
     setImage(file);
     setImagePreview(URL.createObjectURL(file));
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const uploadImage = async () => {
+    if (image) {
+      try {
+        return await fileService.uploadFile(image);
+      } catch (error) {
+        setImageError({
+          image: "Image not uploaded",
+        });
+        return null;
+      }
+    }
+    return null;
+  };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const userData = {
       email: emailRef.current!.value,
@@ -57,11 +73,10 @@ export const RegisterForm = () => {
       password: passwordRef.current!.value,
       terms: checked ? "check" : "",
     };
-
     const errors = validator(userData, registerValidator);
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
-      dispatch(signUp(userData));
+      dispatch(signUp({ ...userData, image: image! }));
     }
   };
   return (
@@ -73,7 +88,7 @@ export const RegisterForm = () => {
             url={imagePreview}
             id="avatar"
             inputRef={avatarRef}
-            error={errors?.image}
+            error={imageError?.image}
           />
           {authError && <p className="input__error">{authError}</p>}
           <InputField

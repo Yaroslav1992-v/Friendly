@@ -5,8 +5,9 @@
 /.pnp
 /.vscode
 /mongo-data-4.4
-docker-copose.yml
+docker-compose.yml
 .pnp.js
+.gitignore
 
 # testing
 /coverage

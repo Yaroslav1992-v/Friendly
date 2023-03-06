@@ -29,6 +29,7 @@ http.interceptors.request.use(
         Authorization: `Bearer ${accessToken}`,
       };
     }
+
     if (isExpired) {
       try {
         const data = await authService.refreshToken();

@@ -1,7 +1,14 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import { StartPage, Main } from "../pages";
+import {
+  StartPage,
+  Main,
+  Friends,
+  Chats,
+  Account,
+  Notifications,
+} from "../pages";
 import { getIsLoggedIn, loadCurrentUser } from "../store/auth";
 import { useAppDispatch } from "../store/createStore";
 
@@ -25,6 +32,10 @@ const AppLoader = () => {
     return (
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path="/friends" element={<Friends />} />
+        <Route path="/chats" element={<Chats />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/account/:userId" element={<Account />} />
       </Routes>
     );
   }

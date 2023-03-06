@@ -11,11 +11,12 @@ export interface RegisterData {
   email: string;
   password: string;
   name: string;
-  image?: string;
+  image?: File | string;
 }
 export interface UserData extends Token {
   followers: [];
   following: [];
+  image?: string;
 }
 export interface Token {
   refreshToken: string;

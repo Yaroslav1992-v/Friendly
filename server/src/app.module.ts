@@ -9,6 +9,9 @@ import { UserModule } from './user/user.module';
 
 import { JwtService } from './jwt/jwt.service';
 import { JwtModule } from './jwt/jwt.module';
+import { FileController } from './file/file.controller';
+import { FileModule } from './file/file.module';
+import { FileService } from './file/file.service';
 
 @Module({
   imports: [
@@ -21,9 +24,10 @@ import { JwtModule } from './jwt/jwt.module';
     AuthModule,
     UserModule,
     JwtModule,
+    FileModule,
   ],
 
-  controllers: [AppController],
-  providers: [AppService, JwtService],
+  controllers: [AppController, FileController],
+  providers: [AppService, JwtService, FileService],
 })
 export class AppModule {}
