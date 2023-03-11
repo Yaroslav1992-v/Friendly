@@ -52,19 +52,7 @@ export const RegisterForm = () => {
     setImage(file);
     setImagePreview(URL.createObjectURL(file));
   };
-  const uploadImage = async () => {
-    if (image) {
-      try {
-        return await fileService.uploadFile(image);
-      } catch (error) {
-        setImageError({
-          image: "Image not uploaded",
-        });
-        return null;
-      }
-    }
-    return null;
-  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const userData = {

@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import configFile from "../config.json";
+import { Images } from "../hoc/hooks/usePosts/usePost.types";
+
 import httpService from "./httpService";
 
 const file: AxiosInstance = axios.create({
@@ -14,10 +16,33 @@ const fileService = {
     const response = await file.post(configFile.cloudinary + "/upload", data);
     return response.data.url;
   },
+  uploadFiles: async (images: Images[]) => {
+    const uploaders = images.map((image) => {
+      const formData = new FormData();
+      formData.append("file", image);
+      formData.append("tags", image.objectFit);
+      formData.append("upload_preset", "ksjzo3yu");
+      return file
+        .post(configFile.cloudinary + "/upload", formData)
+        .then(({ data }) => ({ url: data.url, objectFit: data.tags[0] }));
+    });
+    return await axios.all(uploaders);
+  },
   deleteFile: async (url: string) => {
     try {
       const id = getPublicIdFromUrl(url);
       const deleteFile = await httpService.delete(`/file/deleteByUrl/${id}`);
+      console.log(deleteFile);
+    } catch (error: any) {
+      console.log(error);
+    }
+  },
+  deleteFiles: async (urls: string[]) => {
+    try {
+      const data = urls.map((url) => getPublicIdFromUrl(url));
+      const deleteFile = await httpService.post(`/file/deleteByUrls`, {
+        data,
+      });
       console.log(deleteFile);
     } catch (error: any) {
       console.log(error);

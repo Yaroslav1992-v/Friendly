@@ -1,0 +1,197 @@
+.add-post {
+  &-btn {
+    font-weight: 600;
+    font-size: 17px;
+    color: $blue;
+  }
+  &__images {
+    margin-bottom: 15px;
+    &-grid {
+      display: grid;
+      grid-gap: 8px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .image {
+      background-color: $grey-light;
+      border-radius: 8px;
+      position: relative;
+      z-index: 1;
+      img {
+        border-radius: 8px;
+      }
+      &-cover {
+        img {
+          object-fit: cover;
+        }
+      }
+      &-contain {
+        img {
+          object-fit: contain;
+        }
+      }
+      &-fill {
+        img {
+          object-fit: fill;
+        }
+      }
+
+      &__fit {
+        position: absolute;
+        z-index: 99;
+        left: 5px;
+        bottom: 5px;
+        background-color: $white;
+        border-radius: 50%;
+        height: 20px;
+        width: 20px;
+        z-index: 999;
+        @include center;
+        svg {
+          font-size: 13px;
+        }
+      }
+      &__look,
+      &__remove {
+        position: absolute;
+        z-index: 99;
+        top: 5px;
+        svg {
+          height: 15px;
+          width: 15px;
+        }
+      }
+      &__look {
+        left: 5px;
+        svg {
+          path {
+            fill: $red;
+          }
+        }
+      }
+      &__remove {
+        right: 5px;
+        svg {
+          path {
+            fill: $red;
+          }
+        }
+      }
+    }
+
+    &-one {
+      display: flex;
+      .image {
+        width: 100%;
+        &-one {
+          height: 220px;
+        }
+      }
+    }
+    &-two {
+      grid-template-rows: repeat(2, 77px);
+      .image {
+        &-one {
+          grid-column: 1/3;
+          grid-row: 1/3;
+        }
+
+        &-two {
+          grid-column: 3/4;
+          grid-row: 1/2;
+        }
+      }
+    }
+    &-three {
+      grid-template-rows: repeat(2, 77px);
+      .image {
+        &-one {
+          grid-column: 1/3;
+          grid-row: 1/3;
+        }
+
+        &-two {
+          grid-column: 3/4;
+          grid-row: 1/2;
+        }
+        &-three {
+          grid-column: 3/4;
+          grid-row: 2/3;
+        }
+      }
+    }
+    &-four {
+      grid-template-rows: repeat(4, 77px);
+      .image {
+        &-one {
+          grid-column: 1/3;
+          grid-row: 1/3;
+        }
+        &-two {
+          grid-column: 3/4;
+          grid-row: 1/2;
+        }
+        &-three {
+          grid-column: 3/4;
+          grid-row: 2/3;
+        }
+        &-four {
+          grid-column: 1/4;
+          grid-row: 3/4;
+        }
+      }
+    }
+    &-five {
+      grid-template-rows: repeat(3, 77px);
+      .image {
+        &-one {
+          grid-column: 1/3;
+          grid-row: 1/3;
+        }
+        &-two {
+          grid-column: 3/4;
+          grid-row: 1/2;
+        }
+        &-three {
+          grid-column: 3/4;
+          grid-row: 2/3;
+        }
+        &-four {
+          grid-column: 1/3;
+          grid-row: 3/4;
+        }
+        &-five {
+          grid-column: 3/4;
+          grid-row: 3/4;
+        }
+      }
+    }
+    &-six {
+      grid-template-rows: repeat(4, 77px);
+      .image {
+        &-one {
+          grid-column: 1/3;
+          grid-row: 1/3;
+        }
+        &-two {
+          grid-column: 3/4;
+          grid-row: 1/2;
+        }
+        &-three {
+          grid-column: 3/4;
+          grid-row: 2/3;
+        }
+        &-four {
+          grid-column: 1/3;
+          grid-row: 3/4;
+        }
+        &-five {
+          grid-column: 3/4;
+        }
+        &-six {
+          grid-column: 1/4;
+          grid-row: 4/4;
+        }
+      }
+    }
+  }
+}

@@ -4,3 +4,4 @@ export * from "./account/Account";
 export * from "./chats/Chats";
 export * from "./friends/Friends";
 export * from "./notifications/Notifications";
+export * from "./addPostPage/AddPostPage";

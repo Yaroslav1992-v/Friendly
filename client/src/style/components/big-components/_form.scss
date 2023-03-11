@@ -143,3 +143,19 @@
     }
   }
 }
+.postTextArea {
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+  &__textArea {
+    width: 100%;
+    border: none;
+    outline: transparent;
+    height: auto;
+    resize: none;
+    font-size: 17px;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+  }
+}

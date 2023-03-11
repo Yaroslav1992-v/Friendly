@@ -5,8 +5,6 @@ import { UserModel } from './user.model/user.model';
 
 @Injectable()
 export class UserService {
-  private readonly users: any[];
-
   constructor(
     @InjectModel(UserModel) private readonly userModel: ModelType<UserModel>,
   ) {}
@@ -18,11 +16,5 @@ export class UserService {
     }
 
     return user;
-  }
-
-  async create(user: any): Promise<any> {
-    const newUser = { userId: this.users.length + 1, ...user };
-    this.users.push(newUser);
-    return newUser;
   }
 }

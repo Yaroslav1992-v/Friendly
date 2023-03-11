@@ -20,7 +20,10 @@ export const Main = () => {
       <Container name="container" background="white">
         <TopNavigation
           firstElement={
-            <ActionBtn Icon={<AddPostIcon />} action={someAction} />
+            <ActionBtn
+              Icon={<AddPostIcon />}
+              action={{ from: "/", to: "addPost" }}
+            />
           }
           title="News"
           secondElement={

@@ -1,10 +1,23 @@
 import React from "react";
-import { ActionBtnProps } from "../buttons/Button.props";
+import { Link } from "react-router-dom";
+import { ActionBtnProps } from "./ActionBtn.props";
 
 export const ActionBtn = ({ Icon, action }: ActionBtnProps) => {
   return (
-    <button onClick={action} className="action-btn">
-      {Icon}
-    </button>
+    <>
+      {"to" in action ? (
+        <Link
+          className="action-btn"
+          to={`/${action.to}`}
+          state={{ from: action.from }}
+        >
+          {Icon}
+        </Link>
+      ) : (
+        <button onClick={action} className="action-btn">
+          {Icon}
+        </button>
+      )}
+    </>
   );
 };

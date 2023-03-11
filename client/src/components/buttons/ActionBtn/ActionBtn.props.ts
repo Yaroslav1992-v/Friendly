@@ -1,4 +1,4 @@
 export interface ActionBtnProps {
   Icon: JSX.Element;
-  action: () => void;
+  action: (() => void) | { from: string; to: string };
 }

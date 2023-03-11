@@ -19,10 +19,13 @@ export class FileController {
   @HttpCode(200)
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
-    console.log('he');
-    console.log(file);
     await this.fileServive.saveFile(file);
   }
+  @Post('deleteByUrls')
+  async deleteImages(@Body('data') data: string[]) {
+    return await this.fileServive.deleteImages(data);
+  }
+
   @Delete('deleteByUrl/:url')
   async deleteImage(@Param('url') url: string) {
     console.log(url);

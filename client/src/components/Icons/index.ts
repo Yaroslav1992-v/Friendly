@@ -5,3 +5,7 @@ export * from "./NotificationIcon";
 export * from "./AddPostIcon";
 export * from "./SearchIcon";
 export * from "./XIcon";
+export * from "./AddImageIcon";
+export * from "./AddLocation";
+export * from "./AddVideoIcon";
+export * from "./LoupeIcon";

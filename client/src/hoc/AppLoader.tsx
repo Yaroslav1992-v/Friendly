@@ -11,6 +11,7 @@ import {
 } from "../pages";
 import { getIsLoggedIn, loadCurrentUser } from "../store/auth";
 import { useAppDispatch } from "../store/createStore";
+import { PostsProvider } from "./hooks/usePosts/usePost";
 
 const AppLoader = () => {
   const isLoggedIn = useSelector(getIsLoggedIn());
@@ -30,13 +31,16 @@ const AppLoader = () => {
     );
   } else {
     return (
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/friends" element={<Friends />} />
-        <Route path="/chats" element={<Chats />} />
-        <Route path="/notifications" element={<Notifications />} />
-        <Route path="/account/:userId" element={<Account />} />
-      </Routes>
+      <>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/friends" element={<Friends />} />
+          <Route path="/chats" element={<Chats />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/account/:userId" element={<Account />} />
+        </Routes>
+        <PostsProvider />
+      </>
     );
   }
 };

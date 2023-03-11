@@ -29,3 +29,8 @@ export interface AuthData {
   email: string;
   password: string;
 }
+export interface PostData {
+  images: string[];
+  text: string;
+  userId: string;
+}
