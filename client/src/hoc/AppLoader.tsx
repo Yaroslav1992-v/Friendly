@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import { Route, Router, Routes } from "react-router-dom";
 import {
   StartPage,
   Main,
@@ -12,10 +12,12 @@ import {
 import { getIsLoggedIn, loadCurrentUser } from "../store/auth";
 import { useAppDispatch } from "../store/createStore";
 import { PostsProvider } from "./hooks/usePosts/usePost";
+import UserPostsLoader from "./UserPostsLoader";
 
 const AppLoader = () => {
   const isLoggedIn = useSelector(getIsLoggedIn());
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(loadCurrentUser());
@@ -37,9 +39,9 @@ const AppLoader = () => {
           <Route path="/friends" element={<Friends />} />
           <Route path="/chats" element={<Chats />} />
           <Route path="/notifications" element={<Notifications />} />
-          <Route path="/account/:userId" element={<Account />} />
+          <Route path="/account/:userId/*" element={<UserPostsLoader />} />
+          <Route path="/p/*" element={<PostsProvider />} />
         </Routes>
-        <PostsProvider />
       </>
     );
   }

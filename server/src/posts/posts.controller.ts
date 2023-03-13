@@ -1,6 +1,9 @@
 import {
   Body,
   Controller,
+  Get,
+  NotFoundException,
+  Param,
   Post,
   UseGuards,
   UsePipes,
@@ -20,5 +23,17 @@ export class PostsController {
   async createPost(@Body() dto: PostDto) {
     console.log(dto);
     return this.postsService.createPost(dto);
+  }
+  @Get('getPostsByUserId/:userId')
+  @UseGuards(AuthGuard)
+  async getByUserId(@Param('userId') userId: string) {
+    try {
+      return await this.postsService.findPostByUserId(userId);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
+      }
+      throw error;
+    }
   }
 }

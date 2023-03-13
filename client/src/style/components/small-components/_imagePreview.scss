@@ -3,6 +3,12 @@
   background: $black;
   border-radius: 8px;
   position: relative;
+  &-absolute {
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: 450px;
+  }
   height: 300px;
   z-index: 0;
   &-cover {
@@ -27,6 +33,21 @@
     svg {
       height: 20px;
       width: 20px;
+    }
+  }
+  .arrow-btn {
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    background-color: $grey-light;
+    top: 50%;
+    @include center;
+    &__right {
+      right: 10px;
+    }
+    &__left {
+      left: 10px;
     }
   }
 }

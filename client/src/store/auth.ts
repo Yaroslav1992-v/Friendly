@@ -3,7 +3,7 @@ import authService from "../services/authService";
 import localStorageService from "../services/localStorageService";
 import { Dispatch } from "./storeTypes";
 import { NavigateFunction } from "react-router-dom";
-import { RegisterData, UserData } from "../props/props";
+import { RegisterData, User, UserData } from "../props/props";
 import { AuthData } from "./../props/props";
 import userService from "../services/userService";
 import fileService from "../services/fileService";
@@ -132,8 +132,8 @@ export const getAuthLoading =
     state.auth.isLoading;
 export const getCurrentUser =
   () =>
-  (state: { auth: AuthState }): UserData | null =>
-    state.auth.currentUser;
+  (state: { auth: AuthState }): User | null =>
+    state.auth.currentUser as User | null;
 export const getCurrentUserId =
   () =>
   (state: { auth: AuthState }): string | null | undefined =>

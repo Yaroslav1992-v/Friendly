@@ -5,7 +5,7 @@ export interface NavigationProps {
   to: string;
 }
 export interface TopNavigationProps {
-  firstElement: JSX.Element;
+  firstElement?: JSX.Element;
   title: string;
-  secondElement: JSX.Element;
+  secondElement?: JSX.Element;
 }

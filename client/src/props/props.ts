@@ -1,3 +1,5 @@
+import { ObjectFit } from "../hoc/hooks/usePosts/usePost.types";
+
 export interface Errors {
   email?: string;
   password?: string;
@@ -13,10 +15,17 @@ export interface RegisterData {
   name: string;
   image?: File | string;
 }
-export interface UserData extends Token {
+export interface UserData extends Token, UserPlusData {}
+
+export interface UserPlusData {
   followers: [];
   following: [];
   image?: string;
+}
+export interface User extends Omit<RegisterData, "password">, UserPlusData {
+  _id: string;
+  image?: string;
+  status?: string;
 }
 export interface Token {
   refreshToken: string;
@@ -28,6 +37,10 @@ export interface Token {
 export interface AuthData {
   email: string;
   password: string;
+}
+export interface ImgObject {
+  objectFit: ObjectFit;
+  url: string;
 }
 export interface PostData {
   images: string[];

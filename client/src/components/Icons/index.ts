@@ -9,3 +9,6 @@ export * from "./AddImageIcon";
 export * from "./AddLocation";
 export * from "./AddVideoIcon";
 export * from "./LoupeIcon";
+export * from "./ChatIcon";
+export * from "./LoveIcon";
+export * from "./EditIcon";

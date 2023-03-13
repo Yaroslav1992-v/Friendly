@@ -20,3 +20,4 @@ export * from "./Image/Image";
 export * from "./form/FileField/FileField";
 export * from "./ImagePreview/ImagePreview";
 export * from "./spinner/Spinner";
+export * from "./buttons/dotsBtn/DotsBtn";

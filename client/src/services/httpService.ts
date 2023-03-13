@@ -17,18 +17,7 @@ http.interceptors.request.use(
     const expiresDate = localStorageService.getTokenExpiresDate();
     const refreshToken = localStorageService.getRefreshToken();
     const isExpired = refreshToken && Number(expiresDate) < Date.now();
-    const accessToken = localStorageService.getAccessToken();
     const newConfig: AxiosRequestConfig = { ...config };
-
-    // if (isExpired) {
-    //   localStorageService.removeAuthData();
-    // }
-    if (accessToken) {
-      newConfig.headers = {
-        ...config.headers,
-        Authorization: `Bearer ${accessToken}`,
-      };
-    }
 
     if (isExpired) {
       try {
@@ -42,6 +31,13 @@ http.interceptors.request.use(
       } catch (error) {
         console.log(error);
       }
+    }
+    const accessToken = localStorageService.getAccessToken();
+    if (accessToken) {
+      newConfig.headers = {
+        ...config.headers,
+        Authorization: `Bearer ${accessToken}`,
+      };
     }
 
     return newConfig as InternalAxiosRequestConfig;

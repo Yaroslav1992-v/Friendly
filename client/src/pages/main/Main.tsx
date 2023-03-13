@@ -22,7 +22,7 @@ export const Main = () => {
           firstElement={
             <ActionBtn
               Icon={<AddPostIcon />}
-              action={{ from: "/", to: "addPost" }}
+              action={{ from: "/", to: "p/addPost" }}
             />
           }
           title="News"

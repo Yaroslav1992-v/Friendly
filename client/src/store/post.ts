@@ -5,6 +5,7 @@ import fileService from "../services/fileService";
 import {
   createPostData,
   Images,
+  Post,
   PostData,
 } from "../hoc/hooks/usePosts/usePost.types";
 import postService from "../services/postService";
@@ -12,13 +13,15 @@ import postService from "../services/postService";
 interface PostState {
   isLoading: boolean;
   error: string | null;
+  getPostError: string | null;
   dataLoaded: boolean;
-  posts: PostData[];
+  posts: Post[];
 }
 const initialState: PostState = {
   isLoading: false,
   error: null,
   dataLoaded: false,
+  getPostError: null,
   posts: [],
 };
 
@@ -32,16 +35,21 @@ export const postsSlice = createSlice({
     postCreateRequested: (state: PostState) => {
       state.isLoading = true;
     },
-    postCreateSucceded: (state: PostState) => {
+    postCreateSucceded: (state: PostState, action: PayloadAction<Post>) => {
       state.isLoading = false;
+      state.posts.push(action.payload);
     },
-    postsReceived: (state: PostState, action: PayloadAction<PostData[]>) => {
+    postsReceived: (state: PostState, action: PayloadAction<Post[]>) => {
       state.dataLoaded = true;
       state.posts = action.payload;
       state.isLoading = false;
     },
-    postRequestFailed: (state: PostState, action: PayloadAction<string>) => {
+    postCreateFailed: (state: PostState, action: PayloadAction<string>) => {
       state.error = action.payload;
+      state.isLoading = false;
+    },
+    postRequestFailed: (state: PostState, action: PayloadAction<string>) => {
+      state.getPostError = action.payload;
       state.isLoading = false;
     },
   },
@@ -66,7 +74,7 @@ export const uploadPost =
         images: [...uploadedFiles],
       };
       const post = await postService.createPost(newFile);
-      dispatch(postCreateSucceded());
+      dispatch(postCreateSucceded(post));
       navigate("/");
     } catch (error: any) {
       if (uploadedFiles) {
@@ -75,29 +83,35 @@ export const uploadPost =
       }
 
       const message = error.response?.data?.message || "Something went wrong";
-      dispatch(postRequestFailed(message));
+      dispatch(postCreateFailed(message));
     }
   };
 
-// export const loadCurrentUser = () => async (dispatch: Dispatch) => {
-//   try {
-//     dispatch(userRequsted());
-//     const data = await userService.loadCurrentUser(
-//       localStorageService.getUserId()!
-//     );
-//     dispatch(userRecived(data));
-//   } catch (error: any) {
-//     console.log(error);
-//     const message = error.response?.data?.message || "Something went wrong";
-//     dispatch(authRequestFailed(message));
-//   }
-// }
-export const setErorr = (error: string) => (dispatch: Dispatch) =>
-  dispatch(postRequestFailed(error));
+export const getPostsByUserId =
+  (userId: string) => async (dispatch: Dispatch) => {
+    try {
+      dispatch(postsRequested());
+      const data = await postService.getPostsByUserId(userId);
+      dispatch(postsReceived(data));
+    } catch (error: any) {
+      const message = error.response?.data?.message || "Something went wrong";
+      dispatch(postRequestFailed(message));
+    }
+  };
 export const getPostLoading =
   () =>
   (state: { posts: PostState }): boolean =>
     state.posts.isLoading;
+
+export const setErorr = (error: string) => (dispatch: Dispatch) =>
+  dispatch(postRequestFailed(error));
+export const getPostsImages = () => (state: { posts: PostState }) => {
+  const images = state.posts.posts.map((p) => p.images);
+  return images.reduce((prev, curr) => prev.concat(...curr), []);
+};
+export const getPostImagesArray = () => (state: { posts: PostState }) =>
+  state.posts.posts.map((p) => p.images);
+
 export const getPostError =
   () =>
   (state: { posts: PostState }): string | null =>
@@ -107,8 +121,9 @@ const {
   postsRequested,
   postCreateRequested,
   postCreateSucceded,
-  postRequestFailed,
+  postCreateFailed,
   postsReceived,
+  postRequestFailed,
 } = actions;
 
 export default postsReducer;

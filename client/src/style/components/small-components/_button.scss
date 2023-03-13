@@ -3,14 +3,48 @@
   padding: 15px;
   font-weight: 600;
   font-size: 17px;
+  transition: all ease 0.5s;
   &-black {
     background-color: $black;
     color: $white;
     border-radius: 0px 0px 8px 8px;
+  }
+  &-primary {
+    background: $background;
+    color: $white;
+  }
+  &-white {
+    background-color: $white;
+    color: $black;
   }
 }
 .cancel-btn {
   padding: 10px;
   font-size: 17px;
   font-weight: 600;
+}
+.dots-btn,
+.dots-btn::after,
+.dots-btn::before {
+  background-color: $black;
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+}
+.dots-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+  }
+  &::before {
+    left: 8px;
+  }
+  &::after {
+    right: 8px;
+  }
 }

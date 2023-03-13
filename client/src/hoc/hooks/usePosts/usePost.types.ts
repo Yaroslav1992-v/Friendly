@@ -1,9 +1,14 @@
 export interface PostData {
   text?: string;
   images: {
-    name: string;
+    url: string;
     objectFit: ObjectFit;
   }[];
+}
+export interface Post extends PostData {
+  userId: string;
+  likes: string[];
+  comments: string[];
 }
 export interface Images extends File {
   objectFit: ObjectFit;

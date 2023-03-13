@@ -4,4 +4,7 @@
       transform: rotate(-90deg);
     }
   }
+  &__right {
+    transform: rotate(180deg);
+  }
 }

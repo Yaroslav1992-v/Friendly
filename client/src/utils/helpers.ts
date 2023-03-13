@@ -17,3 +17,12 @@ export function numberToString(num: number): NumberToString {
       throw new Error("Number must be between 1 and 6");
   }
 }
+export function splitArray<T>(array: T[], size: number): T[][] {
+  const result: any[][] = [];
+
+  const numChunks = Math.ceil(array.length / size);
+  for (let i = 0; i < numChunks; i++) {
+    result.push(array.slice(i * size, (i + 1) * size));
+  }
+  return result;
+}
