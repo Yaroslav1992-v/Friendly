@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
-import { Account } from "../pages";
+import { Account, PublicationsPage } from "../pages";
 import { useAppDispatch } from "../store/createStore";
 import { getPostsByUserId } from "./../store/post";
 
 const UserPostsLoader = () => {
   const dispatch = useAppDispatch();
   const { userId } = useParams();
-  console.log(userId);
   useEffect(() => {
     if (userId) {
       dispatch(getPostsByUserId(userId));
@@ -18,6 +17,7 @@ const UserPostsLoader = () => {
     <>
       <Routes>
         <Route index element={<Account />} />
+        <Route path="/publications" element={<PublicationsPage />} />
       </Routes>
     </>
   );

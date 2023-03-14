@@ -37,25 +37,31 @@ export const Account = () => {
 
         {user && <AccountHead {...user} />}
       </Container>
-      <Container background="white" name="container">
-        <div className="account__nav">
-          <Button
-            onClick={handleNav}
-            text="Photos"
-            color={nav === "photos" ? "primary" : "white"}
-          />
-          <Button
-            onClick={handleNav}
-            text="Posts"
-            color={nav === "posts" ? "primary" : "white"}
-          />
-        </div>
-        <div className="account__content">
-          {nav === "photos" ? <AcountPhotos /> : <AccountPosts />}
-        </div>
+      {user && (
+        <Container background="white" name="container">
+          <div className="account__nav">
+            <Button
+              onClick={handleNav}
+              text="Photos"
+              color={nav === "photos" ? "primary" : "white"}
+            />
+            <Button
+              onClick={handleNav}
+              text="Posts"
+              color={nav === "posts" ? "primary" : "white"}
+            />
+          </div>
+          <div className="account__content">
+            {nav === "photos" ? (
+              <AcountPhotos />
+            ) : (
+              <AccountPosts userId={user._id} />
+            )}
+          </div>
 
-        <Navigation />
-      </Container>
+          <Navigation />
+        </Container>
+      )}
     </section>
   );
 };

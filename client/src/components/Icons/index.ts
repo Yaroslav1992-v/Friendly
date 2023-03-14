@@ -12,3 +12,6 @@ export * from "./LoupeIcon";
 export * from "./ChatIcon";
 export * from "./LoveIcon";
 export * from "./EditIcon";
+export * from "./CommentIcon";
+export * from "./LikeIcon";
+export * from "./ShareIcon";

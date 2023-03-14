@@ -6,7 +6,6 @@ import {
   createPostData,
   Images,
   Post,
-  PostData,
 } from "../hoc/hooks/usePosts/usePost.types";
 import postService from "../services/postService";
 
@@ -111,7 +110,8 @@ export const getPostsImages = () => (state: { posts: PostState }) => {
 };
 export const getPostImagesArray = () => (state: { posts: PostState }) =>
   state.posts.posts.map((p) => p.images);
-
+export const getPosts = () => (state: { posts: PostState }) =>
+  state.posts.posts;
 export const getPostError =
   () =>
   (state: { posts: PostState }): string | null =>

@@ -21,3 +21,5 @@ export * from "./form/FileField/FileField";
 export * from "./ImagePreview/ImagePreview";
 export * from "./spinner/Spinner";
 export * from "./buttons/dotsBtn/DotsBtn";
+export * from "./publications/Publications";
+export * from "./dots/Dots";

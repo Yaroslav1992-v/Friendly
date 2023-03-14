@@ -1,0 +1,120 @@
+.publications {
+  &__list {
+  }
+  &__item {
+    max-width: 370px;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+}
+.publication {
+  position: relative;
+  background-color: $white;
+
+  width: 100%;
+  &__head {
+    display: flex;
+    height: 75px;
+    padding: 15px;
+    &-user {
+      color: $grey;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    align-items: center;
+    justify-content: space-between;
+    &-content {
+      display: flex;
+    }
+    &-info {
+      display: flex;
+    }
+  }
+  &__image {
+    max-width: 370px;
+    height: 370px;
+    background-color: $grey-light;
+    &-cover {
+      img {
+        object-fit: cover;
+      }
+    }
+    &-contain {
+      img {
+        object-fit: contain;
+      }
+    }
+    &-fill {
+      img {
+        object-fit: fill;
+      }
+    }
+  }
+  &__nav {
+    display: flex;
+    padding: 15px;
+  }
+  &__actions {
+    display: flex;
+    margin-right: 25px;
+    .action-btn {
+      margin-right: 15px;
+    }
+  }
+  &__numbers {
+    position: absolute;
+    width: 40px;
+    height: 25px;
+    border-radius: 10px;
+    background-color: $grey;
+    @include center;
+    top: 85px;
+    right: 10px;
+  }
+  &__number {
+    color: $white;
+    font-size: 13px;
+  }
+  &__content {
+    padding: 15px;
+    padding-top: 0;
+    &-likes {
+      display: flex;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    &-text {
+      font-size: 17px;
+      font-weight: 500;
+      color: $black;
+    }
+    &-link {
+      width: 100%;
+      display: flex;
+      color: $grey;
+      font-size: 15px;
+    }
+
+    &-date {
+      font-size: 13px !important;
+      color: $grey;
+      font-weight: 600;
+    }
+  }
+}
+.dots {
+  display: flex;
+  &__item:not(:last-child) {
+    margin-right: 8px;
+  }
+  &__dot {
+    height: 7px;
+    width: 7px;
+    border-radius: 50%;
+    background-color: $black;
+    transition: all 0.5s ease;
+    &-active {
+      background: $background;
+    }
+  }
+}

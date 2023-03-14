@@ -28,7 +28,7 @@ export const PostsProvider: React.FC = () => {
   const [imageErrors, setImageErrors] = useState<{ images: string }>();
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [images, setImages] = useState<Images[]>([]);
-  const [lookClose, setLookClose] = useState<LookClose>(null);
+  const [lookClose, setLookClose] = useState<LookClose | null>(null);
   const handleLook = (objectFit: ObjectFit, img: string) => {
     setLookClose((prevState) =>
       prevState ? null : { objectFit: objectFit, img: img }
