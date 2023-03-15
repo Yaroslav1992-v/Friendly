@@ -12,7 +12,7 @@ export const ImagePreview = ({
 }: ImagePreviewProps) => {
   return (
     <div
-      style={{ bottom: slide?.data.loc + "px" }}
+      style={{ bottom: slide?.data?.loc! - 300 + "px" }}
       className={
         "image-preview" +
         ` image-preview-${objectFit} ` +

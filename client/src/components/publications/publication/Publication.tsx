@@ -28,6 +28,7 @@ export const Publication = (post: Post) => {
         url={picture.url}
       />
       <PublicationActions
+        postId={post._id}
         slider={
           images.length > 1
             ? {

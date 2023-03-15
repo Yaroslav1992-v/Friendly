@@ -1,7 +1,5 @@
-import configFile from "../config.json";
 import httpService from "./httpService";
 import { createPostData, Post } from "./../hoc/hooks/usePosts/usePost.types";
-import { PostData } from "../props/props";
 
 const apiEndPoint = "/posts/";
 const postService = {

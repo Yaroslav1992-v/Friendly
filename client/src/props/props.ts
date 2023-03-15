@@ -47,3 +47,13 @@ export interface PostData {
   text: string;
   userId: string;
 }
+export interface createCommentData {
+  content: string;
+  userId: { _id: string; image?: string; name: string };
+  postId: string;
+  parentid?: string;
+}
+export interface Comment extends createCommentData {
+  createdAt: Date;
+  likes?: string[];
+}

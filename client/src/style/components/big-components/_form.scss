@@ -159,3 +159,44 @@
     }
   }
 }
+.text-form {
+  position: fixed;
+  max-width: 375px;
+  width: 100%;
+  bottom: 0;
+  background-color: $white;
+  z-index: 9999;
+  padding: 15px 0 35px 0;
+  display: flex;
+  justify-content: center;
+  .text-area {
+    max-width: 320px;
+    width: 100%;
+    margin-right: 10px;
+    display: flex;
+    &__text-area {
+      width: 100%;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 8px;
+      background-color: #efeff4;
+      outline: transparent;
+      resize: none;
+      height: 36px;
+      font-size: 17px;
+      &::-webkit-scrollbar {
+        width: 0;
+      }
+    }
+  }
+  &__submit {
+    &:disabled {
+      opacity: 0.5;
+    }
+    svg {
+      path {
+        fill: $blue-purple;
+      }
+    }
+  }
+}

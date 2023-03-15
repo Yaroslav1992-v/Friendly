@@ -23,3 +23,6 @@ export * from "./spinner/Spinner";
 export * from "./buttons/dotsBtn/DotsBtn";
 export * from "./publications/Publications";
 export * from "./dots/Dots";
+export * from "./form/TextArea/TextArea";
+export * from "./buttons/sendButton/SendButton";
+export * from "./form/form/TextForm";

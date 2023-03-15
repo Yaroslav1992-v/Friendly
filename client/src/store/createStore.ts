@@ -3,10 +3,12 @@ import { useDispatch } from "react-redux";
 import { combineReducers } from "redux";
 import authReducer from "./auth";
 import postsReducer from "./post";
+import commentsReducer from "./comment";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   posts: postsReducer,
+  comments: commentsReducer,
 });
 function createStore() {
   return configureStore({

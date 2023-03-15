@@ -17,7 +17,7 @@ export const PublicationsPage = () => {
     const to = location.state?.from ? location.state.from : "/";
     navigate(to);
   };
-  console.log(posts);
+
   return (
     <section className="publications-page">
       <div className="container">

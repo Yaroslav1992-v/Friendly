@@ -31,9 +31,9 @@ import { PostsService } from './posts/posts.service';
     PostsModule,
     JwtModule,
     FileModule,
-
+    CommentsModule,
     // PostsLikesModule,
-    // CommentsModule,
+
     // CommentsLikesModule,
   ],
 

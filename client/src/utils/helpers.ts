@@ -27,7 +27,6 @@ export function splitArray<T>(array: T[], size: number): T[][] {
   return result;
 }
 export function formatDate(date: Date): string {
-  console.log(date);
   const now = new Date();
   const diffMs = now.getTime() - new Date(date).getTime();
   const diffMins = Math.round(diffMs / (1000 * 60));

@@ -21,6 +21,8 @@ export interface ContentProps {
   date: Date;
 }
 type fromToWhere = { from: number; to: number };
-export type slider = {
-  slider?: { data: fromToWhere; slider: (num: number) => void };
-};
+export interface ActionsProps {
+  postId: string;
+  slider?: slider;
+}
+export type slider = { data: fromToWhere; slider: (num: number) => void };

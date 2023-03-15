@@ -8,6 +8,7 @@ import {
   Chats,
   Account,
   Notifications,
+  CommentsPage,
 } from "../pages";
 import { getIsLoggedIn, loadCurrentUser } from "../store/auth";
 import { useAppDispatch } from "../store/createStore";
@@ -41,6 +42,7 @@ const AppLoader = () => {
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/account/:userId/*" element={<UserPostsLoader />} />
           <Route path="/p/*" element={<PostsProvider />} />
+          <Route path="/p/:postId/comments" element={<CommentsPage />} />
         </Routes>
       </>
     );
