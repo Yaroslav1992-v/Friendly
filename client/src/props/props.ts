@@ -20,8 +20,8 @@ export interface RegisterData {
 export interface UserData extends Token, UserPlusData {}
 
 export interface UserPlusData {
-  followers: [];
-  following: [];
+  followers: string[];
+  following: string[];
   image?: string;
 }
 export interface User extends Omit<RegisterData, "password">, UserPlusData {
@@ -56,4 +56,8 @@ export interface Like {
 }
 export interface LikeData extends Like {
   _id: string;
+}
+export interface Follow {
+  followingId: string;
+  followerId: string;
 }

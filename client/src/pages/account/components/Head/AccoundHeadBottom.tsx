@@ -15,7 +15,7 @@ export const AccoundHeadBottom = ({
       </Link>
       <Link to={"/names"} className="account__head-digital">
         <h3 className="account__head-number">{following}</h3>
-        <span className="account__head-text">Followers</span>
+        <span className="account__head-text">Following</span>
       </Link>
       <div className="account__head-digital">
         <h3 className="account__head-number">{posts}</h3>

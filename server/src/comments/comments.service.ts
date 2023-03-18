@@ -34,7 +34,10 @@ export class CommentsService {
     if (comment.user.toString() !== userId.toString()) {
       throw new NotFoundException(`Unathorized`);
     }
-
+    await this.postModel.updateOne(
+      { _id: comment.postId },
+      { $pull: { comments: commentId } },
+    );
     await this.commentModel.deleteMany({ 'reply.parentId': commentId }).exec();
     await comment.delete();
   }

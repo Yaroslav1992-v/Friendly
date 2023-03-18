@@ -7,3 +7,4 @@ export * from "./notifications/Notifications";
 export * from "./addPostPage/AddPostPage";
 export * from "./publicationsPage/PublicationsPage";
 export * from "./commentsPage/CommentsPage";
+export * from "./editAccountPage/EditAccount";

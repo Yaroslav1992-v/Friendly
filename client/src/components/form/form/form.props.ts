@@ -1,3 +1,5 @@
+import { User } from "../../../props/props";
+
 export interface TextFormProps {
   placeholder: string;
   reply?: string;
@@ -6,4 +8,7 @@ export interface TextFormProps {
   handleText: () => void;
   disabled: boolean;
   textRef: React.RefObject<HTMLTextAreaElement>;
+}
+export interface editFormProps {
+  user: User;
 }

@@ -30,3 +30,16 @@ export const registerValidator: ValidationConfig = {
     isRequired: { message: "Must Accept Terms And Conditions To Use This App" },
   },
 };
+export const editValidator: ValidationConfig = {
+  email: {
+    isRequired: { message: "Email is Required  " },
+    isEmail: { message: "Invalid Email " },
+  },
+  name: {
+    isRequired: { message: "Name is Required" },
+    min: {
+      message: "account name must contain  at least 5 symbols",
+      value: 5,
+    },
+  },
+};

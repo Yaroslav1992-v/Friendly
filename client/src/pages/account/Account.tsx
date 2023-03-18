@@ -15,6 +15,7 @@ import { AcountPhotos } from "./components/Content/AcountPhotos";
 import { AccountPosts } from "./components/Content/AccountPosts";
 import { useAppDispatch } from "../../store/createStore";
 import { getUserData, loadUserData } from "./../../store/user";
+import { getPostsCount } from "../../store/post";
 
 export const Account = () => {
   const navigate = useNavigate();
@@ -26,15 +27,9 @@ export const Account = () => {
     setNav((prevState) => (prevState === "photos" ? "posts" : "photos"));
   };
   const { userId } = useParams();
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (userId) {
-      dispatch(loadUserData(userId));
-    }
-  }, []);
   const user = useSelector(getUserData(userId as string));
-
+  console.log(user);
+  const postsCount = useSelector(getPostsCount());
   return (
     <section className="account">
       <Container background="grey" name="container">
@@ -44,7 +39,7 @@ export const Account = () => {
           secondElement={<DotsBtn />}
         />
 
-        {user && <AccountHead {...user} />}
+        {user && <AccountHead user={user} post={postsCount} />}
       </Container>
       {user && (
         <Container background="white" name="container">

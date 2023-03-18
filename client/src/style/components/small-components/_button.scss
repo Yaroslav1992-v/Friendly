@@ -17,6 +17,16 @@
     background-color: $white;
     color: $black;
   }
+  .spinner-box {
+    margin: 0 auto;
+    .circle-border {
+      background: linear-gradient($grey-light, rgb(100 130 253 / 30%) 25%);
+    }
+    .circle-core {
+      background-color: transparent;
+      border-radius: 50%;
+    }
+  }
 }
 .cancel-btn {
   padding: 10px;

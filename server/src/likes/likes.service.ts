@@ -30,13 +30,6 @@ export class LikesService {
   }
   async deleteLike(likeId: Types.ObjectId) {
     await this.likeModel.findByIdAndRemove(likeId);
-
-    // } else if (like.type === 'post') {
-    //   await this.postModel.updateOne(
-    //     { _id: like.parentId },
-    //     { $pull: { likes: likeId } },
-    //   );
-    // }
   }
   async getCommentsLikes(id: string) {
     const post = await this.postModel.findById(id);

@@ -49,7 +49,7 @@ const fileService = {
     }
   },
 };
-const getPublicIdFromUrl = (imageUrl: string): string | undefined => {
+export const getPublicIdFromUrl = (imageUrl: string): string | undefined => {
   console.log(imageUrl);
   const baseUrl = "http://res.cloudinary.com/";
   const parts = imageUrl.split(baseUrl);

@@ -14,11 +14,9 @@ export class UserModel extends TimeStamps {
   @prop()
   password: string;
   @prop()
-  currentStatus?: string;
-  @prop()
   following: string[];
   @prop()
   followers: string[];
   @prop()
-  status: string;
+  status?: string;
 }

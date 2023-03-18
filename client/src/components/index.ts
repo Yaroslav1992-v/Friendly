@@ -26,3 +26,4 @@ export * from "./dots/Dots";
 export * from "./form/TextArea/TextArea";
 export * from "./buttons/sendButton/SendButton";
 export * from "./form/form/TextForm";
+export * from "./form/form/EditForm";

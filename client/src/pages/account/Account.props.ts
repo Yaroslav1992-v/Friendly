@@ -5,6 +5,8 @@ export interface AccoundHeadMiddleProps {
 export interface AccountHeadTopProps {
   url?: string;
   id: string;
+  currentUserId: string;
+  isFollowing: boolean;
 }
 export interface AccountHeadBottomProps {
   followers: number;

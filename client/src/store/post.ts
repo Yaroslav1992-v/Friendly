@@ -110,6 +110,9 @@ export const getPostsImages = () => (state: { posts: PostState }) => {
 };
 export const getPostsIds = () => (state: { posts: PostState }) =>
   state.posts.posts.map((p) => p._id);
+export const getPostsCount = () => (state: { posts: PostState }) =>
+  state.posts.posts.length;
+
 export const getPostImagesArray = () => (state: { posts: PostState }) =>
   state.posts.posts.map((p) => p.images);
 export const getPosts = () => (state: { posts: PostState }) =>
