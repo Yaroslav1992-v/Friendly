@@ -45,6 +45,21 @@ export const CommentsSlice = createSlice({
       state.comments = action.payload;
       state.isLoading = false;
     },
+    commentsRemoved: (state: CommentsState, action: PayloadAction<string>) => {
+      console.log(action);
+      const comments = state.comments.filter((c) => c._id !== action.payload);
+
+      state.comments = comments;
+    },
+    commentsEdited: (
+      state: CommentsState,
+      action: PayloadAction<CommentData>
+    ) => {
+      const index = state.comments.findIndex(
+        (c) => c._id === action.payload._id
+      );
+      state.comments[index] = action.payload;
+    },
     commentsCreateFailed: (
       state: CommentsState,
       action: PayloadAction<string>
@@ -72,7 +87,26 @@ export const createComment =
       dispatch(commentsCreateFailed(message));
     }
   };
-
+export const removeComment =
+  (commentId: string) => async (dispatch: Dispatch) => {
+    try {
+      await commentsService.removeComment(commentId);
+      dispatch(commentsRemoved(commentId));
+    } catch (error: any) {
+      const message = error.response?.data?.message || "Something went wrong";
+      dispatch(commentsRequestFailed(message));
+    }
+  };
+export const editComment =
+  (commentId: string, data: string) => async (dispatch: Dispatch) => {
+    try {
+      const editedComment = await commentsService.editComment(commentId, data);
+      dispatch(commentsEdited(editedComment));
+    } catch (error: any) {
+      const message = error.response?.data?.message || "Something went wrong";
+      dispatch(commentsRequestFailed(message));
+    }
+  };
 export const loadComments = (postId: string) => async (dispatch: Dispatch) => {
   try {
     dispatch(commentsRequested());
@@ -102,6 +136,8 @@ const {
   commentsCreateFailed,
   commentsReceived,
   commentsRequestFailed,
+  commentsRemoved,
+  commentsEdited,
 } = actions;
 
 export default commentsReducer;

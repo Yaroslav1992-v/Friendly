@@ -108,6 +108,8 @@ export const getPostsImages = () => (state: { posts: PostState }) => {
   const images = state.posts.posts.map((p) => p.images);
   return images.reduce((prev, curr) => prev.concat(...curr), []);
 };
+export const getPostsIds = () => (state: { posts: PostState }) =>
+  state.posts.posts.map((p) => p._id);
 export const getPostImagesArray = () => (state: { posts: PostState }) =>
   state.posts.posts.map((p) => p.images);
 export const getPosts = () => (state: { posts: PostState }) =>

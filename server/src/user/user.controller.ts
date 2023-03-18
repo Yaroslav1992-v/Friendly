@@ -11,4 +11,9 @@ export class UserController {
   async findUserById(@Param('id') id: string) {
     return this.userService.findOneById(id);
   }
+  @Get('getUserDataById/:id')
+  @UseGuards(AuthGuard)
+  async findUserDataById(@Param('id') id: string) {
+    return this.userService.findUserDataById(id);
+  }
 }

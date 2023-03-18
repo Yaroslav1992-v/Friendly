@@ -3,6 +3,7 @@ import React from "react";
 export const LikeIcon = () => {
   return (
     <svg
+      className="likeIcon"
       width="20"
       height="18"
       viewBox="0 0 20 18"

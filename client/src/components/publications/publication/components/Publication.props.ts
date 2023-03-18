@@ -19,10 +19,13 @@ export interface ContentProps {
   comments: number;
   text?: string;
   date: Date;
+  postId: string;
 }
 type fromToWhere = { from: number; to: number };
 export interface ActionsProps {
   postId: string;
   slider?: slider;
+  liked: string | boolean;
+  userId: string;
 }
 export type slider = { data: fromToWhere; slider: (num: number) => void };

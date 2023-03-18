@@ -1,4 +1,4 @@
-import { RegisterData, Token, UserData } from "../props/props";
+import { RegisterData, Token, UserData, UserMinData } from "../props/props";
 import httpService from "./httpService";
 import localStorageService from "./localStorageService";
 import { AuthData } from "./../props/props";
@@ -25,7 +25,7 @@ const authService = {
 
     return data;
   },
-  loadCurrentUser: async (id: string): Promise<UserData> => {
+  loadCurrentUser: async (id: string): Promise<UserMinData> => {
     const { data } = await httpService.get(`${apiEndPoint}findById/${id}`, {});
     return data;
   },

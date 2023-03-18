@@ -1,4 +1,5 @@
 import { IsString, IsArray, IsOptional, ValidateNested } from 'class-validator';
+import { ObjectId, Types } from 'mongoose';
 export class ReplyDto {
   @IsString()
   to: string;
@@ -8,6 +9,9 @@ export class ReplyDto {
 
   @IsString()
   name: string;
+}
+export interface EditCommentDto {
+  data: { commentId: string; content: string };
 }
 export class CommentDto {
   @IsString()
@@ -19,7 +23,4 @@ export class CommentDto {
   @IsOptional()
   @ValidateNested()
   reply?: ReplyDto;
-  @IsOptional()
-  @IsArray()
-  likes?: string[];
 }

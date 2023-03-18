@@ -7,7 +7,9 @@ export interface Errors {
   terms?: string;
   image?: string;
 }
-
+export interface UserMinData extends Omit<Errors, "password" | "terms"> {
+  name: string;
+}
 export interface RegisterData {
   _id?: string;
   email: string;
@@ -47,13 +49,11 @@ export interface PostData {
   text: string;
   userId: string;
 }
-export interface createCommentData {
-  content: string;
-  userId: { _id: string; image?: string; name: string };
-  postId: string;
-  parentid?: string;
+export interface Like {
+  type: "comment" | "post";
+  parentId: string;
+  author: string;
 }
-export interface Comment extends createCommentData {
-  createdAt: Date;
-  likes?: string[];
+export interface LikeData extends Like {
+  _id: string;
 }

@@ -60,6 +60,13 @@
     .action-btn {
       margin-right: 15px;
     }
+    &-liked {
+      .likeIcon {
+        path {
+          fill: $red;
+        }
+      }
+    }
   }
   &__numbers {
     position: absolute;

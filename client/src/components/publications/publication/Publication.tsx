@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Post } from "../../../hoc/hooks/usePosts/usePost.types";
+import { PostWithLikes } from "../../../hoc/hooks/usePosts/usePost.types";
+import { checkIfLiked } from "../../../utils/helpers";
 import {
   PublicationActions,
   PublicationHead,
@@ -8,15 +9,16 @@ import {
 import { Picture } from "./components/Publication.props";
 import { PublicationContent } from "./components/PublicationContent";
 
-export const Publication = (post: Post) => {
+export const Publication = (post: PostWithLikes) => {
   const { name, image } = post.userId;
-  const { images } = post;
+  const { images, currentUser, likes, _id, comments, text, createdAt } = post;
   const [picture, setPicture] = useState<Picture>(images[0]);
   const [slide, setSlide] = useState<number>(0);
   const handleImage = (num: number) => {
     setPicture({ url: images[num].url, objectFit: images[num].objectFit });
     setSlide(num);
   };
+
   return (
     <article className="publication">
       <PublicationHead name={name} avatar={image} />
@@ -28,7 +30,9 @@ export const Publication = (post: Post) => {
         url={picture.url}
       />
       <PublicationActions
-        postId={post._id}
+        liked={checkIfLiked(_id, currentUser, likes)}
+        userId={currentUser}
+        postId={_id}
         slider={
           images.length > 1
             ? {
@@ -39,10 +43,11 @@ export const Publication = (post: Post) => {
         }
       />
       <PublicationContent
-        likes={365}
-        comments={2}
-        text={post.text}
-        date={post.createdAt}
+        postId={_id}
+        likes={likes.length}
+        comments={comments.length}
+        text={text}
+        date={createdAt}
       />
     </article>
   );

@@ -19,6 +19,21 @@ const commentsService = {
     );
     return data;
   },
+  removeComment: async (commentId: string): Promise<number> => {
+    const data = await httpService.delete(
+      `${apiEndPoint}removeComment/${commentId}`
+    );
+    return data.status;
+  },
+  editComment: async (
+    commentId: string,
+    content: string
+  ): Promise<CommentData> => {
+    const { data } = await httpService.patch(`${apiEndPoint}editComment`, {
+      data: { commentId, content },
+    });
+    return data;
+  },
 };
 
 export default commentsService;

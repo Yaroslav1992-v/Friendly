@@ -1,3 +1,5 @@
+import { LikeData } from "../../../props/props";
+
 export interface PostData {
   text?: string;
   images: {
@@ -8,9 +10,12 @@ export interface PostData {
 export interface Post extends PostData {
   _id: string;
   userId: { _id: string; image: string; name: string };
-  likes: string[];
   comments: string[];
   createdAt: Date;
+}
+export interface PostWithLikes extends Post {
+  currentUser: string;
+  likes: LikeData[];
 }
 export interface Images extends File {
   objectFit: ObjectFit;

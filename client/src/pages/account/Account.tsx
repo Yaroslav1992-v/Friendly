@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ArrowButton,
   Button,
@@ -7,13 +7,14 @@ import {
   Navigation,
   TopNavigation,
 } from "../../components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getCurrentUser } from "../../store/auth";
 import { AccountHead } from "./components/Head/AccountHead";
 import { Nav } from "./Account.props";
 import { AcountPhotos } from "./components/Content/AcountPhotos";
 import { AccountPosts } from "./components/Content/AccountPosts";
+import { useAppDispatch } from "../../store/createStore";
+import { getUserData, loadUserData } from "./../../store/user";
 
 export const Account = () => {
   const navigate = useNavigate();
@@ -24,7 +25,15 @@ export const Account = () => {
   const handleNav = () => {
     setNav((prevState) => (prevState === "photos" ? "posts" : "photos"));
   };
-  const user = useSelector(getCurrentUser());
+  const { userId } = useParams();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(loadUserData(userId));
+    }
+  }, []);
+  const user = useSelector(getUserData(userId as string));
 
   return (
     <section className="account">

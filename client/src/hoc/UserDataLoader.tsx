@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
 import { Account, PublicationsPage } from "../pages";
 import { useAppDispatch } from "../store/createStore";
-import { getPostsByUserId } from "./../store/post";
+import { getPostsByUserId } from "../store/post";
 
-const UserPostsLoader = () => {
+const UserDataLoader = () => {
   const dispatch = useAppDispatch();
   const { userId } = useParams();
   useEffect(() => {
@@ -22,4 +22,4 @@ const UserPostsLoader = () => {
     </>
   );
 };
-export default UserPostsLoader;
+export default UserDataLoader;

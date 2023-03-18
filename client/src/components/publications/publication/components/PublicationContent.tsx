@@ -5,6 +5,7 @@ import { formatDate } from "../../../../utils/helpers";
 
 export const PublicationContent = ({
   likes,
+  postId,
   comments,
   text,
   date,
@@ -43,7 +44,7 @@ export const PublicationContent = ({
         </div>
       )}
       {comments > 0 && (
-        <Link className="publication__content-link" to={""}>
+        <Link className="publication__content-link" to={`p/${postId}/comments`}>
           View {comments} comments
         </Link>
       )}

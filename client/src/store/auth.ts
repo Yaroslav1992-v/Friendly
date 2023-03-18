@@ -2,8 +2,7 @@ import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import authService from "../services/authService";
 import localStorageService from "../services/localStorageService";
 import { Dispatch } from "./storeTypes";
-import { NavigateFunction } from "react-router-dom";
-import { RegisterData, User, UserData } from "../props/props";
+import { RegisterData, User, UserData, UserMinData } from "../props/props";
 import { AuthData } from "./../props/props";
 import userService from "../services/userService";
 import fileService from "../services/fileService";
@@ -12,7 +11,7 @@ interface AuthState {
   isLoading: boolean;
   error: string | null;
   auth: { userId: string | null } | null;
-  currentUser: UserData | null;
+  currentUser: UserMinData | UserData | null;
   dataLoaded: boolean;
   isLoggedIn: boolean;
 }
@@ -41,7 +40,10 @@ export const authSlice = createSlice({
     authRequested: (state: AuthState) => {
       state.isLoading = true;
     },
-    userReceived: (state: AuthState, action: PayloadAction<UserData>) => {
+    userReceived: (
+      state: AuthState,
+      action: PayloadAction<UserMinData | UserData>
+    ) => {
       state.dataLoaded = true;
       state.currentUser = action.payload;
       state.isLoading = false;
@@ -62,9 +64,6 @@ export const authSlice = createSlice({
       state.error = action.payload;
       state.isLoading = false;
     },
-    userRecived: (state: AuthState, action: PayloadAction<UserData>) => {
-      state.currentUser = action.payload;
-    },
   },
 });
 export const signUp = (payload: RegisterData) => async (dispatch: Dispatch) => {
@@ -79,7 +78,7 @@ export const signUp = (payload: RegisterData) => async (dispatch: Dispatch) => {
     });
     localStorageService.setTokens({ ...data });
     dispatch(authRequestSuccess({ userId: data._id }));
-    dispatch(userRecived(data));
+    dispatch(userReceived(data));
     // navigate("/");
   } catch (error: any) {
     const message = error.response?.data?.message || "Something went wrong";
@@ -94,7 +93,6 @@ export const signIn = (payload: AuthData) => async (dispatch: Dispatch) => {
   try {
     dispatch(authRequested());
     const data = await authService.login(payload);
-
     localStorageService.setTokens({ ...data });
     dispatch(authRequestSuccess({ userId: data._id }));
   } catch (error: any) {
@@ -108,9 +106,8 @@ export const loadCurrentUser = () => async (dispatch: Dispatch) => {
     const data = await userService.loadCurrentUser(
       localStorageService.getUserId()!
     );
-    dispatch(userRecived(data));
+    dispatch(userReceived(data as UserMinData));
   } catch (error: any) {
-    console.log(error);
     const message = error.response?.data?.message || "Something went wrong";
     dispatch(authRequestFailed(message));
   }
@@ -144,7 +141,7 @@ export const getCurrentUserImage =
     state.auth.currentUser?.image;
 
 const { reducer: authReducer, actions } = authSlice;
-const { authRequestSuccess, authRequested, authRequestFailed, userRecived } =
+const { authRequestSuccess, authRequested, authRequestFailed, userReceived } =
   actions;
 
 export default authReducer;

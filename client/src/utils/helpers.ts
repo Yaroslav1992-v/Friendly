@@ -1,3 +1,5 @@
+import { LikeData } from "../props/props";
+
 type NumberToString = "one" | "two" | "three" | "four" | "five" | "six";
 export function numberToString(num: number): NumberToString {
   switch (num) {
@@ -48,3 +50,22 @@ export function formatDate(date: Date): string {
     return `${day}.${month}.${year}`;
   }
 }
+export const checkIfLiked = (
+  parentId: string,
+  userId: string,
+  likes: LikeData[]
+) => {
+  const check = likes.find(
+    (l) => l.parentId === parentId && userId === l.author
+  );
+  return check?._id ? check._id : false;
+};
+export const likesCount = (parentId: string, likes: LikeData[]) => {
+  let count = 0;
+  likes.forEach((obj) => {
+    if (obj.parentId === parentId) {
+      count++;
+    }
+  });
+  return count;
+};

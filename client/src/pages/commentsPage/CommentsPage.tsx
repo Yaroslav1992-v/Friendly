@@ -6,17 +6,13 @@ import {
   DotsBtn,
   TextForm,
 } from "../../components";
-
-import localStorageService from "../../services/localStorageService";
 import { createComment, getComments, loadComments } from "../../store/comment";
 import { useAppDispatch } from "../../store/createStore";
 import { useSelector } from "react-redux";
-import {
-  CommentData,
-  createCommentData,
-  Reply,
-} from "./components/Comments.props";
+import { createCommentData, Reply } from "./components/Comments.props";
 import { CommentsList } from "./components/CommentsList";
+import { getCurrentUserId } from "./../../store/auth";
+import { loadCommentsLikes } from "../../store/likes";
 
 export const CommentsPage = () => {
   const { postId } = useParams();
@@ -49,10 +45,12 @@ export const CommentsPage = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(loadComments(postId as string));
+    dispatch(loadCommentsLikes(postId as string));
   }, []);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const [comment, setComment] = useState<string>();
-  const userId = localStorageService.getUserId();
+  const userId = useSelector(getCurrentUserId());
+
   const handleText = () => {
     setComment(textRef.current?.value);
     const height = textRef.current!.scrollHeight;
@@ -82,6 +80,7 @@ export const CommentsPage = () => {
           secondElement={<DotsBtn />}
         />
         <CommentsList
+          userId={userId as string}
           reply={{ ...reply, onReply: handleReply }}
           comments={comments}
         />

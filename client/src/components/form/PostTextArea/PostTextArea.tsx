@@ -1,14 +1,17 @@
 import React from "react";
 import { PostTextAreaProps } from "./PostTextArea.props";
 
-export const PostTextArea = ({ textRef, onChange }: PostTextAreaProps) => {
+export const PostTextArea = ({
+  value,
+  textRef,
+  onChange,
+}: PostTextAreaProps) => {
   return (
     <div className="postTextArea">
       <textarea
+        value={value}
         onChange={onChange}
         ref={textRef}
-        name=""
-        id=""
         className="postTextArea__textArea"
       />
     </div>
