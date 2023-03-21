@@ -1,0 +1,35 @@
+.users {
+  padding: 30px 10px 0;
+  position: relative;
+  &__item {
+    display: flex;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .spinner-box {
+    position: absolute;
+    right: 50%;
+    bottom: 0;
+  }
+  &__user {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__link {
+    display: flex;
+    align-items: center;
+  }
+  &__name {
+    color: $black;
+  }
+  .btn {
+    max-width: 75px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    border-radius: 4px;
+  }
+}

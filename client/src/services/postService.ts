@@ -16,6 +16,12 @@ const postService = {
     );
     return data;
   },
+  loadPosts: async (userIds: string[]): Promise<Post[]> => {
+    const { data } = await httpService.post(`${apiEndPoint}loadPosts/`, {
+      data: userIds,
+    });
+    return data;
+  },
 };
 
 export default postService;

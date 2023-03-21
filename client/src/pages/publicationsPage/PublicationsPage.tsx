@@ -12,7 +12,7 @@ import { getPosts } from "../../store/post";
 export const PublicationsPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const posts = useSelector(getPosts());
+  const posts = useSelector(getPosts("posts"));
   const goBack = () => {
     const to = location.state?.from ? location.state.from : "/";
     navigate(to);

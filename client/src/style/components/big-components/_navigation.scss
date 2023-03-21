@@ -46,12 +46,23 @@
   }
 }
 .top-navigation {
-  display: flex;
-  justify-content: space-between;
+  position: fixed;
+  max-width: $width;
+  width: 100%;
+  background-color: $white;
+  border-bottom: 1px solid $grey-light;
+  height: 45px;
+  top: 0;
+  z-index: 999;
   align-items: center;
-  position: relative;
   margin-bottom: 15px;
-  padding: 5px;
+  padding: 10px;
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
   &__title {
     font-weight: 600;
     font-size: 17px;

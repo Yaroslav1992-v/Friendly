@@ -6,11 +6,11 @@ import { getPostsIds } from "./../../store/post";
 import { useAppDispatch } from "../../store/createStore";
 import { loadPostLikes } from "../../store/likes";
 import { getLikes } from "./../../store/likes";
-import { getCurrentUserId } from "./../../store/auth";
 import localStorageService from "../../services/localStorageService";
 
 export const Publications = ({ posts }: { posts: Post[] }) => {
   const postIds = useSelector(getPostsIds());
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(loadPostLikes(postIds));

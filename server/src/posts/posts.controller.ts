@@ -13,6 +13,7 @@ import { AuthGuard } from '../auth/guards/jwt.guard';
 
 import { PostDto } from './dto/post.dto';
 import { PostsService } from './posts.service';
+import { Types } from 'mongoose';
 
 @Controller('posts')
 export class PostsController {
@@ -21,8 +22,19 @@ export class PostsController {
   @Post('create')
   @UseGuards(AuthGuard)
   async createPost(@Body() dto: PostDto) {
-    console.log(dto);
     return this.postsService.createPost(dto);
+  }
+  @Post('loadPosts')
+  @UseGuards(AuthGuard)
+  async loadPosts(@Body() { data }: { data: Types.ObjectId[] }) {
+    try {
+      return this.postsService.loadPosts(data);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
+      }
+      throw error;
+    }
   }
   @Get('getPostsByUserId/:userId')
   @UseGuards(AuthGuard)

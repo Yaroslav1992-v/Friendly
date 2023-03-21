@@ -9,6 +9,7 @@ export interface Errors {
 }
 export interface UserMinData extends Omit<Errors, "password" | "terms"> {
   name: string;
+  _id: string;
 }
 export interface RegisterData {
   _id?: string;

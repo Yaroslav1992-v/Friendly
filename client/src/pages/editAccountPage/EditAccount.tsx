@@ -24,7 +24,7 @@ export const EditAccount = () => {
     }
   }, []);
 
-  const user = useSelector(getUserData(currentUserId as string));
+  const user = useSelector(getUserData());
   console.log(user);
   return (
     <section className="edit-page">

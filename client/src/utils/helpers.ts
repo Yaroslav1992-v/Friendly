@@ -69,3 +69,10 @@ export const likesCount = (parentId: string, likes: LikeData[]) => {
   });
   return count;
 };
+export function checkString(substring: string, str: string): boolean {
+  if (!substring) {
+    return false;
+  }
+  const regex = new RegExp(substring.split("").join(".*"), "i");
+  return regex.test(str);
+}

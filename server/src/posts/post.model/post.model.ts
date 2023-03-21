@@ -22,8 +22,6 @@ export class PostModel extends TimeStamps {
       ),
   })
   images: Image[];
-  @prop({ default: 0 })
-  likes?: number;
   @prop({ type: () => [String] })
   comments: string[];
 }

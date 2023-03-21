@@ -1,5 +1,6 @@
 export interface SearchFiledProps {
-  searchQuery: () => void;
+  searchQuery: (e: React.ChangeEvent<HTMLInputElement>) => void;
   resetQuery: () => void;
   cancel: () => void;
+  value: string;
 }

@@ -5,9 +5,9 @@ body {
 }
 .container,
 .app-container {
-  max-width: 375px;
+  max-width: $width;
   width: 100%;
-  padding: 15px 0;
+  padding: 40px 0 65px;
   min-height: 100vh;
   margin: 0 auto;
   &-primary {

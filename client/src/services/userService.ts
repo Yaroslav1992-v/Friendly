@@ -1,10 +1,16 @@
-import { Follow, User, UserMinData } from "../props/props";
+import {
+  Follow,
+  User,
+  UserData,
+  UserMinData,
+  UserPlusData,
+} from "../props/props";
 
 import httpService from "./httpService";
 
 const apiEndPoint = "/user/";
 const userService = {
-  loadCurrentUser: async (id: string): Promise<UserMinData> => {
+  loadCurrentUser: async (id: string): Promise<UserData & UserPlusData> => {
     const { data } = await httpService.get(`${apiEndPoint}getById/${id}`, {});
     return data;
   },
@@ -17,6 +23,13 @@ const userService = {
   loadUserData: async (id: string): Promise<User> => {
     const { data } = await httpService.get(
       `${apiEndPoint}getUserDataById/${id}`,
+      {}
+    );
+    return data;
+  },
+  searchUser: async (name: string): Promise<UserMinData[]> => {
+    const { data } = await httpService.get(
+      `${apiEndPoint}searchUser/${name}`,
       {}
     );
     return data;

@@ -8,19 +8,21 @@ export const SearchField = ({
   searchQuery,
   resetQuery,
   cancel,
+  value,
 }: SearchFiledProps) => {
   return (
     <div className="search__field">
       <div className="search__field-box">
         <SearchIcon />
         <input
+          value={value}
           placeholder="Search"
           onChange={searchQuery}
           type="search"
           className="search__query"
         />
         <div className="search__reset">
-          <button onChange={resetQuery} className="search__reset-btn">
+          <button onClick={resetQuery} className="search__reset-btn">
             <XIcon />
           </button>
         </div>

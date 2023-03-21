@@ -10,7 +10,7 @@ import { Picture } from "./components/Publication.props";
 import { PublicationContent } from "./components/PublicationContent";
 
 export const Publication = (post: PostWithLikes) => {
-  const { name, image } = post.userId;
+  const { name, image, _id: userId } = post.userId;
   const { images, currentUser, likes, _id, comments, text, createdAt } = post;
   const [picture, setPicture] = useState<Picture>(images[0]);
   const [slide, setSlide] = useState<number>(0);
@@ -21,7 +21,7 @@ export const Publication = (post: PostWithLikes) => {
 
   return (
     <article className="publication">
-      <PublicationHead name={name} avatar={image} />
+      <PublicationHead userId={userId} name={name} avatar={image} />
       <PublicationImage
         fromToWhere={
           images.length > 1 ? { from: slide + 1, to: images.length } : undefined

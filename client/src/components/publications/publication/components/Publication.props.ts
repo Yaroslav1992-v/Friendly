@@ -3,6 +3,7 @@ import { ObjectFit } from "../../../../hoc/hooks/usePosts/usePost.types";
 export interface HeadProps {
   name: string;
   avatar?: string;
+  userId: string;
 }
 export interface ImageProps {
   url: string;

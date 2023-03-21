@@ -16,11 +16,23 @@ import { UserService } from './user.service';
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
-
+  searchUser;
   @Get('getById/:id')
   @UseGuards(AuthGuard)
   async findUserById(@Param('id') id: string) {
     return this.userService.findOneById(id);
+  }
+  @Get('searchUser/:name')
+  @UseGuards(AuthGuard)
+  async searchByName(@Param('name') name: string) {
+    try {
+      return this.userService.findUsersByName(name);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
+      }
+      throw error;
+    }
   }
   @Get('getUserDataById/:id')
   @UseGuards(AuthGuard)

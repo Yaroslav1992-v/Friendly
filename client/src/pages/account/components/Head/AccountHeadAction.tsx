@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { AccountAction } from "../../Account.props";
 
 export const AccountHeadAction = ({ Icon, name, action }: AccountAction) => {
-  console.log(name);
   return (
     <div className="account__head-action">
       {typeof action === "string" ? (

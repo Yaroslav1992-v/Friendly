@@ -8,9 +8,11 @@ export const TopNavigation = ({
 }: TopNavigationProps) => {
   return (
     <div className="top-navigation">
-      {firstElement && firstElement}
-      <h1 className="top-navigation__title">{title}</h1>
-      {secondElement && secondElement}
+      <div className="top-navigation__container">
+        {firstElement && firstElement}
+        <h1 className="top-navigation__title">{title}</h1>
+        {secondElement && secondElement}
+      </div>
     </div>
   );
 };

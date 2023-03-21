@@ -13,8 +13,8 @@ import { AccountHead } from "./components/Head/AccountHead";
 import { Nav } from "./Account.props";
 import { AcountPhotos } from "./components/Content/AcountPhotos";
 import { AccountPosts } from "./components/Content/AccountPosts";
-import { useAppDispatch } from "../../store/createStore";
-import { getUserData, loadUserData } from "./../../store/user";
+
+import { getUserData } from "./../../store/user";
 import { getPostsCount } from "../../store/post";
 
 export const Account = () => {
@@ -26,9 +26,8 @@ export const Account = () => {
   const handleNav = () => {
     setNav((prevState) => (prevState === "photos" ? "posts" : "photos"));
   };
-  const { userId } = useParams();
-  const user = useSelector(getUserData(userId as string));
-  console.log(user);
+
+  const user = useSelector(getUserData());
   const postsCount = useSelector(getPostsCount());
   return (
     <section className="account">

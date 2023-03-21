@@ -15,6 +15,7 @@ interface PostState {
   getPostError: string | null;
   dataLoaded: boolean;
   posts: Post[];
+  feedPosts: Post[];
 }
 const initialState: PostState = {
   isLoading: false,
@@ -22,6 +23,7 @@ const initialState: PostState = {
   dataLoaded: false,
   getPostError: null,
   posts: [],
+  feedPosts: [],
 };
 
 export const postsSlice = createSlice({
@@ -38,9 +40,17 @@ export const postsSlice = createSlice({
       state.isLoading = false;
       state.posts.push(action.payload);
     },
-    postsReceived: (state: PostState, action: PayloadAction<Post[]>) => {
+    postsReceived: (
+      state: PostState,
+      action: PayloadAction<{ posts: Post[]; where?: "feed" }>
+    ) => {
+      const { posts, where } = action.payload;
       state.dataLoaded = true;
-      state.posts = action.payload;
+      if (where === "feed") {
+        state.feedPosts = posts;
+      } else {
+        state.posts = posts;
+      }
       state.isLoading = false;
     },
     postCreateFailed: (state: PostState, action: PayloadAction<string>) => {
@@ -91,12 +101,22 @@ export const getPostsByUserId =
     try {
       dispatch(postsRequested());
       const data = await postService.getPostsByUserId(userId);
-      dispatch(postsReceived(data));
+      dispatch(postsReceived({ posts: data }));
     } catch (error: any) {
       const message = error.response?.data?.message || "Something went wrong";
       dispatch(postRequestFailed(message));
     }
   };
+export const loadPosts = (userIds: string[]) => async (dispatch: Dispatch) => {
+  try {
+    dispatch(postsRequested());
+    const data = await postService.loadPosts(userIds);
+    dispatch(postsReceived({ posts: data, where: "feed" }));
+  } catch (error: any) {
+    const message = error.response?.data?.message || "Something went wrong";
+    dispatch(postRequestFailed(message));
+  }
+};
 export const getPostLoading =
   () =>
   (state: { posts: PostState }): boolean =>
@@ -108,15 +128,23 @@ export const getPostsImages = () => (state: { posts: PostState }) => {
   const images = state.posts.posts.map((p) => p.images);
   return images.reduce((prev, curr) => prev.concat(...curr), []);
 };
-export const getPostsIds = () => (state: { posts: PostState }) =>
-  state.posts.posts.map((p) => p._id);
+export const getPostsIds =
+  () =>
+  (state: { posts: PostState }): string[] => {
+    const posts = state.posts.posts.map((p) => p._id);
+    const feedPosts = state.posts.feedPosts.map((p) => p._id);
+    return [...posts, ...feedPosts.filter((postId) => !posts.includes(postId))];
+  };
+
 export const getPostsCount = () => (state: { posts: PostState }) =>
   state.posts.posts.length;
 
 export const getPostImagesArray = () => (state: { posts: PostState }) =>
   state.posts.posts.map((p) => p.images);
-export const getPosts = () => (state: { posts: PostState }) =>
-  state.posts.posts;
+export const getPosts =
+  (kind: "feed" | "posts") => (state: { posts: PostState }) =>
+    kind === "posts" ? state.posts.posts : state.posts.feedPosts;
+
 export const getPostError =
   () =>
   (state: { posts: PostState }): string | null =>

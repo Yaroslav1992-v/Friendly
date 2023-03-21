@@ -2,7 +2,13 @@ import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import authService from "../services/authService";
 import localStorageService from "../services/localStorageService";
 import { Dispatch } from "./storeTypes";
-import { RegisterData, User, UserData, UserMinData } from "../props/props";
+import {
+  RegisterData,
+  User,
+  UserData,
+  UserMinData,
+  UserPlusData,
+} from "../props/props";
 import { AuthData } from "./../props/props";
 import userService from "../services/userService";
 import fileService from "../services/fileService";
@@ -11,7 +17,7 @@ interface AuthState {
   isLoading: boolean;
   error: string | null;
   auth: { userId: string | null } | null;
-  currentUser: UserMinData | UserData | null;
+  currentUser: (UserData & UserPlusData) | null;
   dataLoaded: boolean;
   isLoggedIn: boolean;
 }
@@ -40,11 +46,9 @@ export const authSlice = createSlice({
     authRequested: (state: AuthState) => {
       state.isLoading = true;
     },
-    userReceived: (
-      state: AuthState,
-      action: PayloadAction<UserMinData | UserData>
-    ) => {
+    userReceived: (state: AuthState, action: PayloadAction<UserData>) => {
       state.dataLoaded = true;
+      console.log("dis");
       state.currentUser = action.payload;
       state.isLoading = false;
     },
@@ -100,13 +104,17 @@ export const signIn = (payload: AuthData) => async (dispatch: Dispatch) => {
     dispatch(authRequestFailed(message));
   }
 };
+export const updateCurrentUser =
+  (data: User | UserPlusData) => async (dispatch: Dispatch) => {
+    dispatch(userReceived(data as UserData));
+  };
 export const loadCurrentUser = () => async (dispatch: Dispatch) => {
   try {
     dispatch(userRequsted());
     const data = await userService.loadCurrentUser(
       localStorageService.getUserId()!
     );
-    dispatch(userReceived(data as UserMinData));
+    dispatch(userReceived(data));
   } catch (error: any) {
     const message = error.response?.data?.message || "Something went wrong";
     dispatch(authRequestFailed(message));
@@ -129,8 +137,8 @@ export const getAuthLoading =
     state.auth.isLoading;
 export const getCurrentUser =
   () =>
-  (state: { auth: AuthState }): User | null =>
-    state.auth.currentUser as User | null;
+  (state: { auth: AuthState }): UserMinData | UserData | null =>
+    state.auth.currentUser;
 export const getCurrentUserId =
   () =>
   (state: { auth: AuthState }): string | null | undefined =>
@@ -143,5 +151,9 @@ export const getCurrentUserImage =
 const { reducer: authReducer, actions } = authSlice;
 const { authRequestSuccess, authRequested, authRequestFailed, userReceived } =
   actions;
+export const getCurrentUserFollows =
+  () =>
+  (state: { auth: AuthState }): string[] | undefined =>
+    state.auth.currentUser?.following;
 
 export default authReducer;

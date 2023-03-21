@@ -20,6 +20,26 @@ export class UserService {
 
     return user;
   }
+  async findUsersByName(name: string): Promise<UserMin[]> {
+    let regexString = '^';
+    for (let i = 0; i < name.length; i++) {
+      regexString += `${name[i]}`;
+      if (i < name.length - 1) {
+        regexString += '.*';
+      }
+    }
+
+    const regex = new RegExp(`${regexString}`, 'i');
+    const users: UserMin[] = await this.userModel
+      .find({ name: { $regex: regex } })
+      .limit(10)
+      .select('name _id image');
+
+    if (!users) {
+      throw new NotFoundException(`Users with name  ${name} are not founds`);
+    }
+    return users;
+  }
   async findUserDataById(id: string): Promise<UserModel> {
     const user = await this.userModel
       .findById(id)
@@ -47,7 +67,6 @@ export class UserService {
     return user;
   }
   async followUser(data: FollowDto): Promise<void> {
-    console.log(data);
     await this.userModel.updateOne(
       { _id: data.followerId },
       { $push: { following: data.followingId } },
