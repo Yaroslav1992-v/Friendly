@@ -8,6 +8,7 @@ import {
   Chats,
   Notifications,
   CommentsPage,
+  Chat,
 } from "../pages";
 import localStorageService from "../services/localStorageService";
 import { getIsLoggedIn } from "../store/auth";
@@ -16,6 +17,7 @@ import { loadUserData } from "../store/user";
 import { PostsProvider } from "./hooks/usePosts/usePost";
 import UserDataLoader from "./UserDataLoader";
 import { getCurrentUser } from "./../store/auth";
+import { SearchProvider } from "./hooks/useSearch/useSearch";
 
 const AppLoader = () => {
   const isLoggedIn = useSelector(getIsLoggedIn());
@@ -34,16 +36,16 @@ const AppLoader = () => {
         <Routes>
           <Route path="/" element={<StartPage />} />
         </Routes>
-      </>
+      </> //gfd
     );
   } else {
     return (
       <>
         {currentUser && (
           <Routes>
-            <Route path="/" element={<Main key={location.pathname} />} />
+            //main and chats routes are there
+            <Route path="/*" element={<SearchProvider />} />
             <Route path="/friends" element={<Friends />} />
-            <Route path="/chats" element={<Chats />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/account/:userId/*" element={<UserDataLoader />} />
             <Route path="/p/*" element={<PostsProvider />} />

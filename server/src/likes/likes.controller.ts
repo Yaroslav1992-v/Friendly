@@ -38,7 +38,6 @@ export class LikesController {
   async getPostLikes(
     @Body() { data }: { data: Types.ObjectId[] },
   ): Promise<LikeModel[]> {
-    console.log(data);
     return this.likesService.getPostsLikes(data);
   }
 }

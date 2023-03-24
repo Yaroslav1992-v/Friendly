@@ -1,13 +1,19 @@
-import { User, UserMinData } from "../../props/props";
+import { UserMinData } from "../../props/props";
 
 export interface MinUser extends Omit<UserMinData, "email"> {}
 export interface UsersProps {
   users: MinUser[];
   isLoading: boolean;
-  following: string[];
-  currentUser: User;
+  data:
+    | { follows: string[]; action: (id: string, isFollowing: boolean) => void }
+    | ((id: string) => void);
+  currentUser: string;
 }
 export interface AdditionalUsersData {
-  isFollowing: boolean;
-  currentUser: User;
+  data:
+    | {
+        isFollowing: boolean;
+        action: (id: string, isFollowing: boolean) => void;
+      }
+    | ((id: string) => void);
 }

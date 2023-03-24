@@ -13,7 +13,7 @@ import { useAppDispatch } from "../../../store/createStore";
 import { signUp } from "../../../store/auth";
 import { useSelector } from "react-redux";
 import { getAuthError } from "./../../../store/auth";
-import fileService from "../../../services/fileService";
+ 
 
 export const RegisterForm = () => {
   const [checked, setChecked] = useState<boolean>(false);

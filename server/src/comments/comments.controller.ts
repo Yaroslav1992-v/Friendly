@@ -21,7 +21,6 @@ import { CommentDto, EditCommentDto } from './dto/comment.dto';
 
 @Controller('comments')
 export class CommentsController {
-  postsService: any;
   constructor(private readonly commentsService: CommentsService) {}
   @Post('create')
   @UsePipes(new ValidationPipe())

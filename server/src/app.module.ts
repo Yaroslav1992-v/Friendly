@@ -13,6 +13,8 @@ import { FileService } from './file/file.service';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
 import { LikesModule } from './likes/likes.module';
+import { ChatModule } from './chat/chat.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { LikesModule } from './likes/likes.module';
     JwtModule,
     FileModule,
     CommentsModule,
+    MessageModule,
+    ChatModule,
 
     // PostsLikesModule,
 

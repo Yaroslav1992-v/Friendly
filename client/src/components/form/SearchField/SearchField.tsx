@@ -27,7 +27,7 @@ export const SearchField = ({
           </button>
         </div>
       </div>
-      <CancelBtn props={cancel} />
+      {cancel && <CancelBtn props={cancel} />}
     </div>
   );
 };

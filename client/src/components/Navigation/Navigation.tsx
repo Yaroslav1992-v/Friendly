@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavigationProps } from "./Navigation.props";
 
 import { useLocation } from "react-router-dom";
-import { FeedIcon, FriendsIcon, NotificationIcon } from "../Icons";
+import { FeedIcon, FriendsIcon, MessageIcon, NotificationIcon } from "../Icons";
 import { Avatar } from "..";
 import { useSelector } from "react-redux";
 import { getCurrentUserId, getCurrentUserImage } from "./../../store/auth";
@@ -25,6 +25,13 @@ export const Navigation = () => {
       Icon: <FriendsIcon />,
       to: "/friends",
     },
+    {
+      navName: "Message",
+      active: pathname.includes("chats"),
+      Icon: <MessageIcon />,
+      to: "/chats",
+    },
+
     {
       navName: "Notifications",
       active: pathname.includes("notifications"),

@@ -28,7 +28,7 @@ export class FileController {
 
   @Delete('deleteByUrl/:url')
   async deleteImage(@Param('url') url: string) {
-    console.log(url);
+   
     return await this.fileServive.deleteImage(url);
   }
 }

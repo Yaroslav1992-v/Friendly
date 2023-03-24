@@ -1,4 +1,5 @@
 import { ObjectFit } from "../hoc/hooks/usePosts/usePost.types";
+import { Message } from "./../pages/chat/components/Message";
 
 export interface Errors {
   email?: string;
@@ -61,4 +62,23 @@ export interface LikeData extends Like {
 export interface Follow {
   followingId: string;
   followerId: string;
+}
+export interface CreateChatData {
+  firstUser: string;
+  secondUser: string;
+}
+export interface Chat {
+  _id: string;
+  firstUser: Omit<UserMinData, "email">;
+  secondUser: Omit<UserMinData, "email">;
+  lastMessage?: { createdAt: Date; message: string };
+}
+export interface CreateMessageData {
+  content: string;
+  user: string;
+  chatId: string;
+}
+export interface Message extends CreateMessageData {
+  _id: string;
+  createdAt: Date;
 }

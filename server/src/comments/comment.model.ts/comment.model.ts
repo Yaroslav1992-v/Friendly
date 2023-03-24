@@ -14,6 +14,4 @@ export class CommentModel extends TimeStamps {
   reply?: { to: Types.ObjectId; parentId: Types.ObjectId; name: string };
   @prop()
   content: string;
-   
- 
 }

@@ -1,4 +1,4 @@
-import { LikeData } from "../props/props";
+import { LikeData, Message } from "../props/props";
 
 type NumberToString = "one" | "two" | "three" | "four" | "five" | "six";
 export function numberToString(num: number): NumberToString {
@@ -50,6 +50,30 @@ export function formatDate(date: Date): string {
     return `${day}.${month}.${year}`;
   }
 }
+export function getReadableDate(dateStr: Date): string {
+  const date = new Date(dateStr);
+  const now = new Date();
+  const diff = now.getTime() - date.getTime();
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  if (days === 0) {
+    return "Today";
+  } else if (days === 1) {
+    return "Yesterday";
+  } else if (days <= 6) {
+    return `${days} days ago`;
+  } else if (days <= 13) {
+    return "1 week ago";
+  } else {
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear().toString().slice(-2);
+    return `${day}.${month}.${year}`;
+  }
+}
+export function formatTime(dateStr: Date): string {
+  const date = new Date(dateStr);
+  return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
 export const checkIfLiked = (
   parentId: string,
   userId: string,
@@ -73,6 +97,23 @@ export function checkString(substring: string, str: string): boolean {
   if (!substring) {
     return false;
   }
-  const regex = new RegExp(substring.split("").join(".*"), "i");
-  return regex.test(str);
+  for (let i = 0; i < substring.length; i++) {
+    if (substring[i].toLowerCase() !== str[i].toLowerCase()) {
+      return false;
+    }
+  }
+
+  return true;
+}
+export function groupMessagesByDate(messages: Message[]): Message[][] {
+  const groups: { [key: string]: Message[] } = {};
+  messages.forEach((message) => {
+    const date = new Date(message.createdAt).toLocaleDateString();
+    if (!groups[date]) {
+      groups[date] = [];
+    }
+    groups[date].push(message);
+  });
+
+  return Object.values(groups);
 }
