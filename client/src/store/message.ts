@@ -33,6 +33,9 @@ export const messagesSlice = createSlice({
       state.messages = action.payload;
       state.isLoading = false;
     },
+    messageReceived: (state: MessagesState, action: PayloadAction<Message>) => {
+      state.messages.push(action.payload);
+    },
     messagesRequestFailed: (
       state: MessagesState,
       action: PayloadAction<string>
@@ -53,8 +56,8 @@ export const createMessage =
     try {
       dispatch(createMessageAction());
       const newMessage = await messageService.createMessage(message);
-      console.log(newMessage);
       dispatch(messageCreated(newMessage));
+      return newMessage;
     } catch (error: any) {
       const message = error.response?.data?.message || "Something went wrong";
       dispatch(messagesRequestFailed(message));
@@ -72,7 +75,9 @@ export const loadMessages =
       dispatch(messagesRequestFailed(message));
     }
   };
-
+export const recivedMessage = (msg: Message) => (dispatch: AppDispatch) => {
+  dispatch(messageReceived(msg));
+};
 export const getMessages = () => (state: { messages: MessagesState }) =>
   state.messages.messages;
 export const getMessagesDataLoaded =
@@ -84,6 +89,7 @@ const {
   messagesRequested,
   messagesRequestFailed,
   messagesReceived,
+  messageReceived,
   messageCreated,
 } = actions;
 export default messageReducer;

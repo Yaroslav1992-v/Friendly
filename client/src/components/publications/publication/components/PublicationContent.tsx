@@ -44,7 +44,10 @@ export const PublicationContent = ({
         </div>
       )}
       {comments > 0 && (
-        <Link className="publication__content-link" to={`p/${postId}/comments`}>
+        <Link
+          className="publication__content-link"
+          to={`/p/${postId}/comments`}
+        >
           View {comments} comments
         </Link>
       )}

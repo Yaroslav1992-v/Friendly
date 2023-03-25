@@ -4,7 +4,7 @@ export class MessageDto {
   @IsString()
   user: string;
   @IsString()
-  text: string;
+  content: string;
   @IsArray()
   chatId: string;
 }

@@ -15,6 +15,7 @@ import { CommentsModule } from './comments/comments.module';
 import { LikesModule } from './likes/likes.module';
 import { ChatModule } from './chat/chat.module';
 import { MessageModule } from './message/message.module';
+import { SocketGateway } from './socket/socket.gateway';
 
 @Module({
   imports: [
@@ -40,6 +41,6 @@ import { MessageModule } from './message/message.module';
   ],
 
   controllers: [AppController, FileController],
-  providers: [AppService, FileService],
+  providers: [AppService, FileService, SocketGateway],
 })
 export class AppModule {}

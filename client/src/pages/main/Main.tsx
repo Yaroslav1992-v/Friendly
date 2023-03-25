@@ -33,7 +33,6 @@ export const Main = () => {
   const follows: string[] | undefined = useSelector(getCurrentUserFollows());
   const posts = useSelector(getPosts("feed"));
   const handleFollow = (id: string, isFollowing: boolean) => {
-    console.log(isFollowing);
     const follow: Follow = {
       followingId: id,
       followerId: currentUser?._id as string,

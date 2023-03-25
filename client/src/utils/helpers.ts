@@ -28,7 +28,8 @@ export function splitArray<T>(array: T[], size: number): T[][] {
   }
   return result;
 }
-export function formatDate(date: Date): string {
+export function formatDate(dateStr: Date): string {
+  const date = new Date(dateStr);
   const now = new Date();
   const diffMs = now.getTime() - new Date(date).getTime();
   const diffMins = Math.round(diffMs / (1000 * 60));

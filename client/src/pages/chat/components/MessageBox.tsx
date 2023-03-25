@@ -1,53 +1,20 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { getReadableDate } from "../../../utils/helpers";
 import { MessageBoxProps } from "./Chats.props";
 import { Message } from "./Message";
 import { formatTime } from "./../../../utils/helpers";
 
 export const MessageBox = ({ messages, currentUserId }: MessageBoxProps) => {
-  // const messages = [
-  //   {
-  //     date: "Yesterday",
-  //     messages: [
-  //       {
-  //         text: "I like living here, it's not too big and it has great weather all year long, perfect!",
-  //         userId: userId,
-  //         time: "09:18",
-  //       },
-  //       {
-  //         text: "Sure!",
-  //         userId: 1,
-  //         time: "09:18",
-  //       },
-  //       {
-  //         text: "There is a Rose Parade in August!",
-  //         userId: 1,
-  //         time: "09:18",
-  //       },
-  //     ],
-  //   },
+  const bottomRef = useRef<HTMLDivElement>(null);
 
-  //   {
-  //     date: "Today",
-  //     messages: [
-  //       {
-  //         text: "There's a parade too!",
-  //         userId: userId,
-  //         time: "11:29",
-  //       },
-  //       {
-  //         text: "It has wonderful restaurants and close to the mountains but I'm not ever going to leave",
-  //         userId: userId,
-  //         time: "11:29",
-  //       },
-  //       {
-  //         text: "Ok it's very easy",
-  //         userId: 1,
-  //         time: "11:29",
-  //       },
-  //     ],
-  //   },
-  // ];
+  useEffect(() => {
+    if (bottomRef.current) {
+      console.log(bottomRef.current);
+      console.log(bottomRef.current.scrollTop);
+      bottomRef.current?.scrollIntoView({ behavior: "auto" });
+    }
+  }, [messages]);
+
   return (
     <div className="chat__messageBox">
       {messages.map((d, i) => (
@@ -75,6 +42,7 @@ export const MessageBox = ({ messages, currentUserId }: MessageBoxProps) => {
               </li>
             ))}
           </ul>
+          <div ref={bottomRef}></div>
         </div>
       ))}
     </div>

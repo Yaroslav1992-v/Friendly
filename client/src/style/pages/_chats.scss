@@ -19,6 +19,9 @@
     display: flex;
     align-items: center;
     width: 100%;
+    .chat-bubble {
+      padding: 3px 7px;
+    }
   }
   &__content {
     display: flex;
@@ -52,7 +55,10 @@
 }
 .chat {
   &__container {
-    padding: 10px;
+    padding: 20px 10px;
+    .chat-bubble {
+      padding: 5px 10px;
+    }
   }
   &__messages {
     padding: 30px 0;

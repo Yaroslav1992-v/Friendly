@@ -1,5 +1,5 @@
 {                       
-    "apiEndPoint" :"http://localhost:3003/api",
+    "apiEndPoint" :"http://localhost:3003",
     "cloudinary" : "https://api.cloudinary.com/v1_1/dqry2dgi0/image",
     "cloudKey":"717676689559995",
       "cloudSecret":"SB35jaCoWu5ljUmLYJo3vHIqCrU"

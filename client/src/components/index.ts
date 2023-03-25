@@ -28,3 +28,4 @@ export * from "./buttons/sendButton/SendButton";
 export * from "./form/form/TextForm";
 export * from "./form/form/EditForm";
 export * from "./User/Users";
+export * from "./typing/Typing";
