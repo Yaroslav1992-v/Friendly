@@ -99,7 +99,7 @@ export const PostsProvider: React.FC = () => {
   return (
     <PostContext.Provider value={contextValue}>
       <Routes>
-        <Route path="/addPost" element={<AddPostPage />} />
+        <Route index element={<AddPostPage />} />
       </Routes>
     </PostContext.Provider>
   );

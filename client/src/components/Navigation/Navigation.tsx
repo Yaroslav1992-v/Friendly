@@ -7,11 +7,17 @@ import { Avatar } from "..";
 import { useSelector } from "react-redux";
 import { getCurrentUserId, getCurrentUserImage } from "./../../store/auth";
 import { NavigationItem } from "./NavigationItem";
+import {
+  notficationsCount,
+  unreadMessagesCount,
+} from "../../store/notificaton";
 
 export const Navigation = () => {
   const { pathname } = useLocation();
   const currentUserId = useSelector(getCurrentUserId());
   const userImage = useSelector(getCurrentUserImage());
+  const notificationsCount = useSelector(notficationsCount());
+  const unreadMessages = useSelector(unreadMessagesCount());
   const navigation: NavigationProps[] = [
     {
       navName: "Feed",
@@ -29,6 +35,7 @@ export const Navigation = () => {
       navName: "Message",
       active: pathname.includes("chats"),
       Icon: <MessageIcon />,
+      count: unreadMessages,
       to: "/chats",
     },
 
@@ -36,6 +43,7 @@ export const Navigation = () => {
       navName: "Notifications",
       active: pathname.includes("notifications"),
       Icon: <NotificationIcon />,
+      count: notificationsCount,
       to: "/notifications",
     },
     {
@@ -45,6 +53,7 @@ export const Navigation = () => {
       to: `/account/${currentUserId}`,
     },
   ];
+
   return (
     <nav className="navigation">
       <ul className="navigation__list">
@@ -55,6 +64,7 @@ export const Navigation = () => {
             Icon={n.Icon}
             active={n.active}
             to={n.to}
+            count={n.count || undefined}
           />
         ))}
       </ul>

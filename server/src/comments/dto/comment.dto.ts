@@ -3,10 +3,8 @@ import { ObjectId, Types } from 'mongoose';
 export class ReplyDto {
   @IsString()
   to: string;
-
   @IsString()
   parentId: string;
-
   @IsString()
   name: string;
 }

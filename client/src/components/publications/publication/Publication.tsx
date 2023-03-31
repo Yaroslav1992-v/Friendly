@@ -30,7 +30,9 @@ export const Publication = (post: PostWithLikes) => {
         url={picture.url}
       />
       <PublicationActions
+        postImage={post.images[0].url}
         liked={checkIfLiked(_id, currentUser, likes)}
+        author={userId}
         userId={currentUser}
         postId={_id}
         slider={

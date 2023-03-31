@@ -9,6 +9,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { MessageDto } from 'src/message/dto/message.dto';
+import { NotificationDto } from './../notification/dto/notification.dto';
 
 @WebSocketGateway({
   cors: {
@@ -39,15 +40,28 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
   ): void {
     client.join(id);
   }
-
+  @SubscribeMessage('notify')
+  notify(
+    @MessageBody() notification: NotificationDto,
+    @ConnectedSocket() client: Socket,
+  ): void {
+    client.broadcast
+      .to(notification.reciever)
+      .emit('notification', notification);
+  }
   @SubscribeMessage('message')
   handleMessage(
     @MessageBody() msg: MessageDto,
     @ConnectedSocket() client: Socket,
   ): void {
     const users = this.server.sockets.adapter.rooms.get(msg.chatId);
-    client.broadcast.to(msg.chatId).emit('new-message', msg);
+    if (users.size == 2) {
+      client.broadcast.to(msg.chatId).emit('new-message', msg);
+    } else {
+      client.emit('users-count', users.size);
+    }
   }
+
   @SubscribeMessage('typing')
   typing(
     @MessageBody() data: Pick<MessageDto, 'chatId' | 'user'>,

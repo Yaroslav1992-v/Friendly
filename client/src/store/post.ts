@@ -14,6 +14,7 @@ interface PostState {
   error: string | null;
   getPostError: string | null;
   dataLoaded: boolean;
+  currentPost: Post | undefined;
   posts: Post[];
   feedPosts: Post[];
 }
@@ -23,6 +24,7 @@ const initialState: PostState = {
   dataLoaded: false,
   getPostError: null,
   posts: [],
+  currentPost: undefined,
   feedPosts: [],
 };
 
@@ -42,14 +44,18 @@ export const postsSlice = createSlice({
     },
     postsReceived: (
       state: PostState,
-      action: PayloadAction<{ posts: Post[]; where?: "feed" }>
+      action: PayloadAction<{ posts: Post[] | Post; where?: "feed" }>
     ) => {
       const { posts, where } = action.payload;
       state.dataLoaded = true;
-      if (where === "feed") {
-        state.feedPosts = posts;
+      if (Array.isArray(posts)) {
+        if (where === "feed") {
+          state.feedPosts = posts;
+        } else {
+          state.posts = posts;
+        }
       } else {
-        state.posts = posts;
+        state.currentPost = posts;
       }
       state.isLoading = false;
     },
@@ -117,6 +123,19 @@ export const loadPosts = (userIds: string[]) => async (dispatch: Dispatch) => {
     dispatch(postRequestFailed(message));
   }
 };
+export const loadCurrentPost =
+  (postId: string) => async (dispatch: Dispatch) => {
+    try {
+      dispatch(postsRequested());
+      const data = await postService.loadPost(postId);
+      console.log(data);
+      if (data) dispatch(postsReceived({ posts: data }));
+    } catch (error: any) {
+      const message = error.response?.data?.message || "Something went wrong";
+      dispatch(postRequestFailed(message));
+    }
+  };
+
 export const getPostLoading =
   () =>
   (state: { posts: PostState }): boolean =>
@@ -144,7 +163,17 @@ export const getPostImagesArray = () => (state: { posts: PostState }) =>
 export const getPosts =
   (kind: "feed" | "posts") => (state: { posts: PostState }) =>
     kind === "posts" ? state.posts.posts : state.posts.feedPosts;
-
+export const getPostByUserId =
+  (postId: string) => (state: { posts: PostState }) => {
+    let post = state.posts.posts.find((p) => p._id === postId);
+    if (!post) {
+      post = state.posts.feedPosts.find((p) => p._id === postId);
+    }
+    if (!post) {
+      post = state.posts.currentPost;
+    }
+    return post;
+  };
 export const getPostError =
   () =>
   (state: { posts: PostState }): string | null =>

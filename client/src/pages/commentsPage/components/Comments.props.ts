@@ -2,14 +2,14 @@ export interface createCommentData {
   content: string;
   user: string;
   postId?: string;
-  reply?: ReplyData;
+  reply?: Reply;
 }
 
-export interface CommentData extends Omit<createCommentData, "user"> {
+export interface CommentData extends Omit<createCommentData, "user" | "reply"> {
   _id: string;
   createdAt: Date;
   user: { _id: string; image?: string; name: string };
-  replies?: CommentData[];
+  reply?: ReplyData;
 }
 export interface CommentEditProps {
   data: string;
@@ -28,15 +28,18 @@ export interface ReplyData extends Reply {
   onReply: (name: string, id: string, parentId: string) => void;
 }
 export interface LikeBoxProps {
+  comment: CommentData;
   likes: number;
   userId: string;
   parentId: string;
   liked: string | boolean;
 }
-export interface AdditionalData {
+export interface CommentProps {
+  comment: CommentData;
   name?: string;
   liked: string | boolean;
   likes: number;
   currentUserId: string;
   nested?: true;
+  reply?: ReplyData;
 }

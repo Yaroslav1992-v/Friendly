@@ -28,6 +28,7 @@
     flex-direction: column;
   }
   &__item {
+    position: relative;
     padding: 10px 25px 5px;
     max-width: 75px;
 
@@ -43,6 +44,21 @@
         color: $blue-purple;
       }
     }
+  }
+  &__count {
+    position: absolute;
+    background-color: $red;
+    height: fit-content;
+    min-height: 17px;
+    max-width: 22px;
+    padding: 3px;
+    min-width: 17px;
+    top: 7px;
+    right: 22px;
+    font-size: 9px;
+    color: $white;
+    border-radius: 50%;
+    @include center;
   }
 }
 .top-navigation {

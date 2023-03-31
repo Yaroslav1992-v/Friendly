@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 
 import { Avatar } from "../../../../components";
 import {
@@ -10,10 +9,19 @@ import {
 } from "../../../../components/Icons";
 import { AccountHeadTopProps } from "../../Account.props";
 import { AccountHeadAction } from "./AccountHeadAction";
-import { Follow } from "../../../../props/props";
+import {
+  createNotificationData,
+  Follow,
+  NotificationType,
+} from "../../../../props/props";
 import { useAppDispatch } from "../../../../store/createStore";
 import { followUser, unfollowUser } from "../../../../store/user";
 import {} from "./../../../../store/user";
+import { UseApp } from "../../../../hoc/AppLoader";
+import {
+  createNotification,
+  removeNotificationsByType,
+} from "../../../../store/notificaton";
 export const AccountHeadTop = ({
   url,
   isFollowing,
@@ -21,16 +29,32 @@ export const AccountHeadTop = ({
   currentUserId,
 }: AccountHeadTopProps) => {
   const dispatch = useAppDispatch();
-
-  const handleFollow = () => {
+  const { socket } = UseApp();
+  const handleFollow = async () => {
     const follow: Follow = {
       followingId: id as string,
       followerId: currentUserId as string,
     };
     if (isFollowing) {
       dispatch(unfollowUser(follow));
+      dispatch(
+        removeNotificationsByType(
+          currentUserId,
+          NotificationType.Follow,
+          currentUserId
+        )
+      );
     } else {
       dispatch(followUser(follow));
+      const notif: createNotificationData = {
+        author: currentUserId,
+        content: "followed you",
+        type: NotificationType.Follow,
+        reciever: id,
+        typeId: currentUserId,
+      };
+      const notification = await dispatch(createNotification(notif));
+      socket.emit("notify", notification);
     }
   };
 

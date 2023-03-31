@@ -82,3 +82,32 @@ export interface Message extends CreateMessageData {
   _id: string;
   createdAt: Date;
 }
+export enum NotificationType {
+  Message = "message",
+  Comment = "comment",
+  CommentReply = "commentReply",
+  PostLike = "postLike",
+  CommentLike = "commentLike",
+  Follow = "follow",
+}
+
+export interface Notification {
+  _id: string;
+  author: Omit<UserMinData, "email">;
+  reciever: string;
+  type: NotificationType;
+  content: string;
+  typeId: string;
+  post?: { url?: string; id?: string };
+  isRead: boolean;
+  createdAt: Date;
+}
+export interface createNotificationData
+  extends Omit<Notification, "author" | "_id" | "isRead" | "createdAt"> {
+  author: string;
+}
+export interface NotificationsGroup extends Notification {
+  authors: Omit<UserMinData, "email">[];
+  notificationsId: string[];
+  messages: { count: number; lastMessage: string };
+}

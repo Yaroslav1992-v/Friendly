@@ -7,6 +7,7 @@ export const NavigationItem = ({
   navName,
   Icon,
   active,
+  count,
 }: NavigationProps) => {
   return (
     <li
@@ -17,6 +18,7 @@ export const NavigationItem = ({
       <Link className="navigation__link" to={to}>
         <div className="navigation__icon">{Icon}</div>
         <h3 className="navigation__title">{navName}</h3>
+        {count && count > 0 && <div className="navigation__count">{count}</div>}
       </Link>
     </li>
   );

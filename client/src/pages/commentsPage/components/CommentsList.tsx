@@ -35,6 +35,7 @@ export const CommentsList = ({
     setChildren((prevState) => [...prevState, id]);
   };
   const allComments = nestComments();
+
   return (
     <>
       {likes && (
@@ -45,11 +46,8 @@ export const CommentsList = ({
                 currentUserId={userId}
                 likes={likesCount(c._id, likes)}
                 liked={checkIfLiked(c._id, userId, likes)}
-                _id={c._id}
+                comment={c}
                 reply={reply}
-                user={c.user}
-                content={c.content}
-                createdAt={c.createdAt}
               />
               {!children.includes(c._id) &&
                 c.replies &&
@@ -68,14 +66,11 @@ export const CommentsList = ({
                       <Comment
                         currentUserId={userId}
                         likes={likesCount(r._id, likes)}
-                        liked={checkIfLiked(c._id, userId, likes)}
+                        liked={checkIfLiked(r._id, userId, likes)}
                         name={r.reply?.name}
                         nested={true}
-                        _id={r._id}
+                        comment={r}
                         reply={reply}
-                        user={r.user}
-                        content={r.content}
-                        createdAt={r.createdAt}
                       />
                     </li>
                   ))}

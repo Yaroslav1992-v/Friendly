@@ -59,6 +59,7 @@ export class CommentsService {
   async getComments(postId: string): Promise<CommentModel[]> {
     const comments = await this.commentModel
       .find({ postId })
+      .sort({ createdAt: 'desc' })
       .populate('user', 'name image')
       .exec();
     if (!comments) {

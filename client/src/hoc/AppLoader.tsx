@@ -1,7 +1,13 @@
 import React, { createContext, useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Route, Routes, useLocation } from "react-router-dom";
-import { StartPage, Friends, Notifications, CommentsPage } from "../pages";
+import { Route, Routes } from "react-router-dom";
+import {
+  StartPage,
+  Friends,
+  Notifications,
+  CommentsPage,
+  AddPostPage,
+} from "../pages";
 import localStorageService from "../services/localStorageService";
 import { getIsLoggedIn } from "../store/auth";
 import { useAppDispatch } from "../store/createStore";
@@ -12,6 +18,9 @@ import { getCurrentUser } from "./../store/auth";
 import { SearchProvider } from "./hooks/useSearch/useSearch";
 import { io, Socket } from "socket.io-client";
 import configFile from "../config.json";
+import { recieveNotification } from "../store/notificaton";
+import { Notification } from "../props/props";
+import { loadNotifications } from "./../store/notificaton";
 let socket: Socket;
 interface AppContextValue {
   socket: Socket;
@@ -31,8 +40,13 @@ const AppLoader = () => {
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(loadUserData(userId as string));
+      dispatch(loadNotifications(userId as string));
       socket = io(`${configFile.apiEndPoint}`);
+      socket.off("notification");
       socket.emit("setup", userId);
+      socket.on("notification", (data: Notification) => {
+        dispatch(recieveNotification(data));
+      });
     }
   }, [isLoggedIn]);
   const contextValue: AppContextValue = {
@@ -44,7 +58,7 @@ const AppLoader = () => {
         <Routes>
           <Route path="/" element={<StartPage />} />
         </Routes>
-      </> //gfd
+      </>
     );
   } else {
     return (
@@ -59,6 +73,11 @@ const AppLoader = () => {
               <Route path="/account/:userId/*" element={<UserDataLoader />} />
               <Route path="/p/*" element={<PostsProvider />} />
               <Route path="/p/:postId/comments" element={<CommentsPage />} />
+              <Route
+                path="/p/:postId/comments/:commentId"
+                element={<CommentsPage />}
+              />
+              <Route path="/addPost" element={<AddPostPage />} />
             </Routes>
           </AppContex.Provider>
         )}

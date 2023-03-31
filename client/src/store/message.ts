@@ -2,6 +2,7 @@ import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppDispatch } from "./createStore";
 import messageService from "./../services/message.service";
 import { CreateMessageData, Message } from "../props/props";
+import { updateChat } from "./chats";
 
 interface MessagesState {
   isLoading: boolean;
@@ -57,6 +58,7 @@ export const createMessage =
       dispatch(createMessageAction());
       const newMessage = await messageService.createMessage(message);
       dispatch(messageCreated(newMessage));
+      dispatch(updateChat(newMessage));
       return newMessage;
     } catch (error: any) {
       const message = error.response?.data?.message || "Something went wrong";

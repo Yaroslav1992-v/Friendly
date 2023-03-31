@@ -1,5 +1,5 @@
 import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Chat, CreateChatData } from "../props/props";
+import { Chat, CreateChatData, Message } from "../props/props";
 import { AppDispatch } from "./createStore";
 import chatService from "./../services/chatService";
 import { NavigateFunction } from "react-router-dom";
@@ -37,6 +37,13 @@ export const chatsSlice = createSlice({
     chatCreated: (state: ChatsState, action: PayloadAction<Chat>) => {
       state.chats.push(action.payload);
     },
+    chatUpdated: (state: ChatsState, action: PayloadAction<Message>) => {
+      const { createdAt, content } = action.payload;
+      const index = state.chats.findIndex(
+        (c) => c._id === action.payload.chatId
+      );
+      state.chats[index].lastMessage = { createdAt, message: content };
+    },
   },
 });
 const createChatAction = createAction("/createChatRequested");
@@ -55,6 +62,9 @@ export const createChat =
       dispatch(chatsRequestFailed(message));
     }
   };
+export const updateChat = (data: Message) => async (dispatch: AppDispatch) => {
+  dispatch(chatUpdated(data));
+};
 export const loadChats = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(chatsRequested());
@@ -73,7 +83,12 @@ export const getChatsDataLoaded = () => (state: { chats: ChatsState }) =>
 export const getChatById = (chatId: string) => (state: { chats: ChatsState }) =>
   state.chats.chats.find((c) => c._id === chatId);
 const { reducer: chatsReducer, actions } = chatsSlice;
-const { chatsRequested, chatsRequestFailed, chatsReceived, chatCreated } =
-  actions;
+const {
+  chatsRequested,
+  chatUpdated,
+  chatsRequestFailed,
+  chatsReceived,
+  chatCreated,
+} = actions;
 
 export default chatsReducer;

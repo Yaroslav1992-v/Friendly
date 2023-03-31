@@ -16,6 +16,7 @@ import { LikesModule } from './likes/likes.module';
 import { ChatModule } from './chat/chat.module';
 import { MessageModule } from './message/message.module';
 import { SocketGateway } from './socket/socket.gateway';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { SocketGateway } from './socket/socket.gateway';
     CommentsModule,
     MessageModule,
     ChatModule,
+    NotificationModule,
 
     // PostsLikesModule,
 

@@ -22,6 +22,16 @@ const postService = {
     });
     return data;
   },
+  loadPost: async (postId: string): Promise<Post | undefined> => {
+    try {
+      const { data } = await httpService.get(
+        `${apiEndPoint}loadPost/${postId}`
+      );
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default postService;

@@ -1,38 +1,61 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Avatar } from "../../../components";
-import { CommentData, AdditionalData } from "./Comments.props";
+
 import { formatDate } from "./../../../utils/helpers";
 import { AiFillDelete } from "react-icons/ai";
 import { MdModeEditOutline } from "react-icons/md";
 import { useAppDispatch } from "../../../store/createStore";
 import { editComment, removeComment } from "./../../../store/comment";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import localStorageService from "./../../../services/localStorageService";
 import { CommentEdit } from "./CommentEdit";
 import { CommentLikeBox } from "./CommentLikeBox";
+import { removeNotificationsByType } from "../../../store/notificaton";
+import { CommentProps } from "./Comments.props";
+import { NotificationType } from "../../../props/props";
 export interface Nested {
   nested?: true;
 }
 export const Comment = ({
-  _id,
-  user,
+  comment,
   reply,
   name,
-  content,
-  createdAt,
   nested,
   liked,
   likes,
   currentUserId,
-}: CommentData & AdditionalData) => {
+}: CommentProps) => {
   const dispatch = useAppDispatch();
+  const { commentId } = useParams();
+
   const onDelete = (commentId: string) => {
     dispatch(removeComment(commentId));
+
+    const typeId = comment.reply ? comment._id : comment.postId;
+    const type = comment.reply
+      ? NotificationType.CommentReply
+      : NotificationType.Comment;
+
+    if (typeId && type) {
+      console.log("del");
+      dispatch(removeNotificationsByType(typeId, type, currentUserId));
+    }
   };
   const userId = localStorageService.getUserId();
-
+  const { content, user, createdAt, _id } = comment;
   const [data, setData] = useState<string>(content);
   const [edit, setEdit] = useState<boolean>(false);
+  const commentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (comment._id === commentId && commentRef.current) {
+      const topOffset = commentRef.current.offsetTop - 100;
+      commentRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
+      window.scrollTo({ top: topOffset, behavior: "smooth" });
+    }
+  }, []);
   const handleEdit = () => {
     setEdit((prevState) => !prevState);
   };
@@ -47,7 +70,13 @@ export const Comment = ({
     textRef.current!.style.height = height + "px";
   };
   return (
-    <div className="comment">
+    <div
+      id={comment._id}
+      className={
+        "comment " + (commentId === comment._id ? "comment__reading" : "")
+      }
+      ref={commentRef}
+    >
       <div className="comment__avatar">
         <Avatar url={user.image} size={nested ? "S" : "M"} />
       </div>
@@ -67,6 +96,7 @@ export const Comment = ({
             {nested && name && <Link to={`/account/${user._id}`}>@{name}</Link>}
             <p>{content}</p>
             <CommentLikeBox
+              comment={comment}
               liked={liked}
               parentId={_id}
               likes={likes}

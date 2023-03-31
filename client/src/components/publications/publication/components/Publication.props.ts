@@ -28,5 +28,7 @@ export interface ActionsProps {
   slider?: slider;
   liked: string | boolean;
   userId: string;
+  author: string;
+  postImage: string;
 }
 export type slider = { data: fromToWhere; slider: (num: number) => void };

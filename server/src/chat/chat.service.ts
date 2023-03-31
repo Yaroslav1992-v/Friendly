@@ -28,6 +28,7 @@ export class ChatService {
       .find({
         $or: [{ firstUser: userId }, { secondUser: userId }],
       })
+      .sort({ updatedAt: 'desc' })
       .populate('firstUser', 'name image')
       .populate('secondUser', 'name image')
       .exec();

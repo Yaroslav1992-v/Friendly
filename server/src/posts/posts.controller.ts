@@ -36,6 +36,19 @@ export class PostsController {
       throw error;
     }
   }
+
+  @Get('loadPost/:postId')
+  @UseGuards(AuthGuard)
+  async loadPost(@Param('postId') postId: string) {
+    try {
+      return await this.postsService.findPostByPostId(postId);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
+      }
+      throw error;
+    }
+  }
   @Get('getPostsByUserId/:userId')
   @UseGuards(AuthGuard)
   async getByUserId(@Param('userId') userId: string) {

@@ -8,6 +8,7 @@ import userReducer from "./user";
 import likesReducer from "./likes";
 import chatsReducer from "./chats";
 import messageReducer from "./message";
+import notificationsReducer from "./notificaton";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   likes: likesReducer,
   chats: chatsReducer,
   messages: messageReducer,
+  notifications: notificationsReducer,
 });
 function createStore() {
   return configureStore({

@@ -18,6 +18,19 @@ export class PostsService {
     };
     return await this.postModel.create(newPost);
   }
+
+  async findPostByPostId(postId: string): Promise<PostModel> {
+    const post = await this.postModel
+      .findById(postId)
+      .populate('userId', 'name image')
+      .sort({ createdAt: 'desc' })
+      .exec();
+    if (!post) {
+      throw new NotFoundException(`Post with ID ${{ postId }} not found`);
+    }
+
+    return post;
+  }
   async findPostByUserId(userId: string): Promise<PostModel[]> {
     const posts = await this.postModel
       .find({ userId })

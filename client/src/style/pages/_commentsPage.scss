@@ -29,7 +29,10 @@
   &__avatar {
     margin-right: 5px;
   }
-
+  &__reading {
+    border-radius: 8px;
+    border: 1px solid $blue;
+  }
   &__user {
     font-size: 15px;
     font-weight: 600;

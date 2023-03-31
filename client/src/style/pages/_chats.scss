@@ -19,10 +19,13 @@
     display: flex;
     align-items: center;
     width: 100%;
+    border-radius: 5px;
+    padding: 5px;
     .chat-bubble {
       padding: 3px 7px;
     }
   }
+
   &__content {
     display: flex;
     width: 100%;
@@ -51,6 +54,20 @@
     @include center;
     color: $white;
     margin-left: auto;
+  }
+  &__list {
+    .unread {
+      background-color: $white-100;
+      .chats {
+        &__content {
+          border: none;
+        }
+        &__last-message {
+          font-weight: 600;
+          color: $black;
+        }
+      }
+    }
   }
 }
 .chat {

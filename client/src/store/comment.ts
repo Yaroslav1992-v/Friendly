@@ -82,6 +82,7 @@ export const createComment =
       dispatch(commentsCreateRequested());
       const newComment = await commentsService.createComments(comment);
       dispatch(commentsCreateSucceded(newComment));
+      return newComment;
     } catch (error: any) {
       const message = error.response?.data?.message || "Something went wrong";
       dispatch(commentsCreateFailed(message));

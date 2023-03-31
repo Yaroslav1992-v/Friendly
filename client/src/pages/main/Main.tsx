@@ -28,7 +28,6 @@ export const Main = () => {
     setOpenSeach((prevState) => !prevState);
   };
   const dispatch = useAppDispatch();
-
   const currentUser = useSelector(getCurrentUser());
   const follows: string[] | undefined = useSelector(getCurrentUserFollows());
   const posts = useSelector(getPosts("feed"));
@@ -56,7 +55,7 @@ export const Main = () => {
           firstElement={
             <ActionBtn
               Icon={<AddPostIcon />}
-              action={{ from: "/", to: "p/addPost" }}
+              action={{ from: "/", to: "/addPost" }}
             />
           }
           title="News"

@@ -8,7 +8,7 @@ export const ActionBtn = ({ Icon, action }: ActionBtnProps) => {
       {"to" in action ? (
         <Link
           className="action-btn"
-          to={`/${action.to}`}
+          to={`${action.to}`}
           state={{ from: action.from }}
         >
           {Icon}
