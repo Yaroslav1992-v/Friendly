@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Param,
@@ -54,6 +55,18 @@ export class PostsController {
   async getByUserId(@Param('userId') userId: string) {
     try {
       return await this.postsService.findPostByUserId(userId);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
+      }
+      throw error;
+    }
+  }
+  @Delete('removePost/:postId')
+  @UseGuards(AuthGuard)
+  async removePostById(@Param('postId') postId: string) {
+    try {
+      return await this.postsService.removePost(postId);
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw new NotFoundException(error.message);

@@ -3,6 +3,7 @@ import { TextAreaProps } from "./TextAreaProps";
 
 export const TextArea = ({
   textRef,
+
   placeholder,
   onChange,
   reply,
@@ -10,7 +11,6 @@ export const TextArea = ({
 }: TextAreaProps) => {
   const setValue = (): string => {
     if (reply) {
-      console.log(value.toLowerCase().includes(reply.toLowerCase()));
       if (value.includes(reply)) return value;
       else return "@" + reply + " " + value;
     } else return value;

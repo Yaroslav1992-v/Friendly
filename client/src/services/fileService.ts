@@ -31,8 +31,7 @@ const fileService = {
   deleteFile: async (url: string) => {
     try {
       const id = getPublicIdFromUrl(url);
-      const deleteFile = await httpService.delete(`/file/deleteByUrl/${id}`);
-      console.log(deleteFile);
+      await httpService.delete(`/file/deleteByUrl/${id}`);
     } catch (error: any) {
       console.log(error);
     }
@@ -50,7 +49,6 @@ const fileService = {
   },
 };
 export const getPublicIdFromUrl = (imageUrl: string): string | undefined => {
-  console.log(imageUrl);
   const baseUrl = "http://res.cloudinary.com/";
   const parts = imageUrl.split(baseUrl);
 

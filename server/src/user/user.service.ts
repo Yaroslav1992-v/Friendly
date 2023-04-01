@@ -40,6 +40,16 @@ export class UserService {
     }
     return users;
   }
+  async findUsers(data: string[]): Promise<UserMin[]> {
+    const users: UserMin[] = await this.userModel
+      .find({ _id: { $in: data } })
+      .select('name _id image');
+
+    if (!users) {
+      throw new NotFoundException(`Users are not founds`);
+    }
+    return users;
+  }
   async findUserDataById(id: string): Promise<UserModel> {
     const user = await this.userModel
       .findById(id)

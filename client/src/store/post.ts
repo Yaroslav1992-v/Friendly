@@ -67,8 +67,21 @@ export const postsSlice = createSlice({
       state.getPostError = action.payload;
       state.isLoading = false;
     },
+    postRemoved: (state: PostState, action: PayloadAction<string>) => {
+      state.posts = state.posts.filter((p) => p._id !== action.payload);
+    },
   },
 });
+export const removePostById =
+  (postId: string) => async (dispatch: Dispatch) => {
+    try {
+      await postService.removePost(postId);
+      dispatch(postRemoved(postId));
+    } catch (error: any) {
+      const message = error.response?.data?.message || "Something went wrong";
+      dispatch(postCreateFailed(message));
+    }
+  };
 export const uploadPost =
   (
     data: { text: string; userId: string },
@@ -117,6 +130,7 @@ export const loadPosts = (userIds: string[]) => async (dispatch: Dispatch) => {
   try {
     dispatch(postsRequested());
     const data = await postService.loadPosts(userIds);
+
     dispatch(postsReceived({ posts: data, where: "feed" }));
   } catch (error: any) {
     const message = error.response?.data?.message || "Something went wrong";
@@ -184,6 +198,7 @@ const {
   postCreateRequested,
   postCreateSucceded,
   postCreateFailed,
+  postRemoved,
   postsReceived,
   postRequestFailed,
 } = actions;

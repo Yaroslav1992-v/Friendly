@@ -18,6 +18,7 @@ import { AuthUser } from 'src/constants/constants';
 import { CommentModel } from './comment.model.ts/comment.model';
 import { CommentsService } from './comments.service';
 import { CommentDto, EditCommentDto } from './dto/comment.dto';
+import { Types } from 'mongoose';
 
 @Controller('comments')
 export class CommentsController {
@@ -31,7 +32,7 @@ export class CommentsController {
   @Delete('removeComment/:commentId')
   @UseGuards(AuthGuard)
   async removeComment(
-    @Param('commentId') commentId: string,
+    @Param('commentId') commentId: Types.ObjectId,
     @Req() req: AuthUser,
   ) {
     try {

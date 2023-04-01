@@ -52,7 +52,7 @@ export const NotificationsSlice = createSlice({
       state: NotificationsState,
       action: PayloadAction<Notification>
     ) => {
-      state.notifications.push(action.payload);
+      state.notifications.unshift(action.payload);
     },
     notificationsRemoved: (
       state: NotificationsState,
@@ -251,7 +251,7 @@ export const unreadMessagesCount =
   () =>
   (state: { notifications: NotificationsState }): number =>
     state.notifications.notifications.reduce((count, notification) => {
-      if (!notification.isRead && notification.type === "message") {
+      if (notification.type === "message") {
         return count + 1;
       }
       return count;

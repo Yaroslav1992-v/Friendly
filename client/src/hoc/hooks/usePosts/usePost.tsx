@@ -26,6 +26,7 @@ export const PostsProvider: React.FC = () => {
   const [isLoading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [imageErrors, setImageErrors] = useState<{ images: string }>();
+  console.log("ds");
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [images, setImages] = useState<Images[]>([]);
   const [lookClose, setLookClose] = useState<LookClose | null>(null);
@@ -68,9 +69,6 @@ export const PostsProvider: React.FC = () => {
             img.objectFit = "cover";
             return;
           case "cover":
-            img.objectFit = "fill";
-            return;
-          case "fill":
             img.objectFit = "contain";
             return;
         }

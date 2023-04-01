@@ -3,7 +3,7 @@ import { Spinner } from "..";
 import { User } from "./User";
 import { UsersProps } from "./Users.props";
 
-export const Users = ({ users, isLoading, data, currentUser }: UsersProps) => {
+export const Users = ({ users, isLoading, data }: UsersProps) => {
   const checkData = (id: string) => {
     if ("follows" in data) {
       return { isFollowing: data.follows.includes(id), action: data.action };
@@ -14,7 +14,7 @@ export const Users = ({ users, isLoading, data, currentUser }: UsersProps) => {
 
   return (
     <div className="users">
-      {isLoading ? (
+      {!isLoading ? (
         <Spinner />
       ) : (
         <ul className="users__list">

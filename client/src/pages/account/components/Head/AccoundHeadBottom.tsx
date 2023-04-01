@@ -9,11 +9,11 @@ export const AccoundHeadBottom = ({
 }: AccountHeadBottomProps) => {
   return (
     <div className="account__head-bottom">
-      <Link to={"/names"} className="account__head-digital">
+      <Link to={"followers"} className="account__head-digital">
         <h3 className="account__head-number">{followers}</h3>
         <span className="account__head-text">Followers</span>
       </Link>
-      <Link to={"/names"} className="account__head-digital">
+      <Link to={"following"} className="account__head-digital">
         <h3 className="account__head-number">{following}</h3>
         <span className="account__head-text">Following</span>
       </Link>

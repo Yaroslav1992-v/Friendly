@@ -63,7 +63,7 @@ export const PublicationActions = ({
       >
         <ActionBtn action={likePost} Icon={<LikeIcon />} />
         <ActionBtn
-          action={{ to: `p/${postId}/comments`, from: "/" }}
+          action={{ to: `/p/${postId}/comments`, from: "/" }}
           Icon={<CommentIcon />}
         />
         <ActionBtn action={action} Icon={<ShareIcon />} />

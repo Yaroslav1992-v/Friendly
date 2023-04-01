@@ -1,13 +1,7 @@
 import React, { createContext, useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import {
-  StartPage,
-  Friends,
-  Notifications,
-  CommentsPage,
-  AddPostPage,
-} from "../pages";
+import { StartPage, Notifications, CommentsPage, AddPostPage } from "../pages";
 import localStorageService from "../services/localStorageService";
 import { getIsLoggedIn } from "../store/auth";
 import { useAppDispatch } from "../store/createStore";
@@ -68,16 +62,15 @@ const AppLoader = () => {
             <Routes>
               {/* //main and chats routes are there */}
               <Route path="/*" element={<SearchProvider />} />
-              <Route path="/friends" element={<Friends />} />
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/account/:userId/*" element={<UserDataLoader />} />
-              <Route path="/p/*" element={<PostsProvider />} />
+              <Route path="/addPost/*" element={<PostsProvider />} />
               <Route path="/p/:postId/comments" element={<CommentsPage />} />
               <Route
                 path="/p/:postId/comments/:commentId"
                 element={<CommentsPage />}
               />
-              <Route path="/addPost" element={<AddPostPage />} />
+              {/* <Route path="/addPost" element={<AddPostPage />} /> */}
             </Routes>
           </AppContex.Provider>
         )}

@@ -31,9 +31,11 @@ export class LikesService {
   async deleteLike(likeId: Types.ObjectId) {
     await this.likeModel.findByIdAndRemove(likeId);
   }
+  async deleteLikesByParentId(parentId: Types.ObjectId) {
+    await this.likeModel.deleteMany({ parentId });
+  }
   async getCommentsLikes(id: string) {
     const post = await this.postModel.findById(id);
-
     const comments = post.comments;
     const models = await this.likeModel.find({
       type: 'comment',

@@ -4,6 +4,9 @@
     font-size: 17px;
     color: $blue;
   }
+  &__container {
+    padding-top: 50px;
+  }
   &__images {
     margin-bottom: 15px;
     &-grid {

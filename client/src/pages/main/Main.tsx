@@ -75,7 +75,6 @@ export const Main = () => {
 
         {openSearch ? (
           <Users
-            currentUser={currentUser?._id as string}
             data={{ follows: follows || [], action: handleFollow }}
             isLoading={isDataLoaded}
             users={users}

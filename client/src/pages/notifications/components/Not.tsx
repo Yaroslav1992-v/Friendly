@@ -23,7 +23,7 @@ export const Not = ({ not }: { not: NotificationsGroup }) => {
     switch (type) {
       case "postLike":
         setNotInfo({
-          link: `/account/${reciever}/publications`,
+          link: `/account/${reciever}/publications/${typeId}`,
           content: "liked your post",
           data: (
             <div className="notifications__img">
@@ -41,21 +41,21 @@ export const Not = ({ not }: { not: NotificationsGroup }) => {
         break;
       case "comment":
         setNotInfo({
-          link: `/p/${not.post?.id}/comments/${not.typeId}`,
+          link: `/p/${not.post?.id}/comments/${typeId}`,
           content: `commented your post`,
           data: <p>{not.content}</p>,
         });
         break;
       case "commentReply":
         setNotInfo({
-          link: `/p/${not.post?.id}/comments`,
+          link: `/p/${not.post?.id}/comments/${typeId}`,
           content: `replied to your comment`,
           data: <p>{not.content}</p>,
         });
         break;
       case "commentLike":
         setNotInfo({
-          link: `/p/${not.post?.id}/comments`,
+          link: `/p/${not.post?.id}/comments/${typeId}`,
           content: `liked your comment`,
           data: <p>{not.content}</p>,
         });

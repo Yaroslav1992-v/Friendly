@@ -7,7 +7,6 @@ export interface UsersProps {
   data:
     | { follows: string[]; action: (id: string, isFollowing: boolean) => void }
     | ((id: string) => void);
-  currentUser: string;
 }
 export interface AdditionalUsersData {
   data:

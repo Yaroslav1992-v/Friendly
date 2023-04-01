@@ -37,7 +37,6 @@ export const Comment = ({
       : NotificationType.Comment;
 
     if (typeId && type) {
-      console.log("del");
       dispatch(removeNotificationsByType(typeId, type, currentUserId));
     }
   };

@@ -37,6 +37,9 @@ export function formatDate(dateStr: Date): string {
   const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
 
   if (diffMins <= 59) {
+    if (diffMins === 0) {
+      return "now";
+    }
     return `${diffMins} minutes ago`;
   } else if (diffHours <= 23) {
     return `${diffHours} hours ago`;

@@ -4,6 +4,7 @@ export interface HeadProps {
   name: string;
   avatar?: string;
   userId: string;
+  postId: string;
 }
 export interface ImageProps {
   url: string;

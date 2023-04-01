@@ -26,7 +26,7 @@ export interface createPostData {
   images: { objectFit: ObjectFit; url: string }[];
 }
 
-export type ObjectFit = "cover" | "fill" | "contain";
+export type ObjectFit = "cover" | "contain";
 export interface PostContextValue {
   images: Images[];
   imagePreviews: string[];

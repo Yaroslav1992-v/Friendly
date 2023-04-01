@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CommentData, ReplyData } from "./Comments.props";
 import { Comment } from "./Comment";
 import { useSelector } from "react-redux";
 import { getLikes } from "../../../store/likes";
 import { likesCount, checkIfLiked } from "../../../utils/helpers";
+import { useParams } from "react-router-dom";
 export const CommentsList = ({
   reply,
   comments,
@@ -34,7 +35,15 @@ export const CommentsList = ({
   const openChildren = (id: string) => {
     setChildren((prevState) => [...prevState, id]);
   };
+  useEffect(() => {
+    if (commentId) {
+      const repliedComment = comments.find((c) => commentId === c._id);
+      if (repliedComment)
+        openChildren(repliedComment.reply?.parentId as string);
+    }
+  }, []);
   const allComments = nestComments();
+  const { commentId } = useParams();
 
   return (
     <>

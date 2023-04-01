@@ -5,6 +5,7 @@ import {
   NotFoundException,
   Param,
   Patch,
+  Post,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -27,6 +28,18 @@ export class UserController {
   async searchByName(@Param('name') name: string) {
     try {
       return this.userService.findUsersByName(name);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
+      }
+      throw error;
+    }
+  }
+  @Post('findUsers')
+  @UseGuards(AuthGuard)
+  async findUsers(@Body() data: string[]) {
+    try {
+      return this.userService.findUsers(data);
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw new NotFoundException(error.message);

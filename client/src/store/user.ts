@@ -11,6 +11,7 @@ interface UserState {
   isLoading: boolean;
   error: string | null | Errors;
   user: User | null;
+  users: UserMinData[];
   searchedUsers: UserMinData[];
   dataLoaded: boolean;
 }
@@ -18,6 +19,7 @@ const initialState: UserState = {
   isLoading: false,
   error: null,
   user: null,
+  users: [],
   searchedUsers: [],
   dataLoaded: false,
 };
@@ -28,10 +30,10 @@ export const userSlice = createSlice({
   reducers: {
     userRequested: (state: UserState) => {
       state.user = null;
-      state.dataLoaded = true;
+      state.dataLoaded = false;
     },
     userSearchRequested: (state: UserState) => {
-      state.dataLoaded = true;
+      state.dataLoaded = false;
     },
     userSearchCompleted: (
       state: UserState,
@@ -49,11 +51,15 @@ export const userSlice = createSlice({
       } else {
         state.searchedUsers = action.payload;
       }
-      state.dataLoaded = false;
+      state.dataLoaded = true;
     },
     userReceived: (state: UserState, action: PayloadAction<User>) => {
-      state.dataLoaded = false;
+      state.dataLoaded = true;
       state.user = action.payload;
+    },
+    usersReceived: (state: UserState, action: PayloadAction<UserMinData[]>) => {
+      state.dataLoaded = true;
+      state.users = action.payload;
     },
     usersRequestFailed: (state: UserState, action: PayloadAction<string>) => {
       state.error = action.payload;
@@ -101,7 +107,7 @@ export const loadUserData =
     }
   };
 export const editUser =
-  (user: User, file?: File) => async (dispatch: Dispatch) => {
+  (user: User, file?: File) => async (dispatch: AppDispatch) => {
     let image;
     try {
       dispatch(userEditRequested());
@@ -116,6 +122,7 @@ export const editUser =
         ...user,
       });
       dispatch(userEdited(editedUser));
+      dispatch(updateCurrentUser(editedUser));
     } catch (error: any) {
       const data = error?.response?.data;
       const message = error.response?.data?.message || "Something went wrong";
@@ -153,6 +160,17 @@ export const searchUser = (name: string) => async (dispatch: Dispatch) => {
     dispatch(usersRequestFailed(message));
   }
 };
+export const findUsersByIds = (ids: string[]) => async (dispatch: Dispatch) => {
+  try {
+    dispatch(userSearchRequested());
+    const users = await userService.findUsers(ids);
+    dispatch(usersReceived(users));
+  } catch (error: any) {
+    console.log(error);
+    const message = error.response?.data?.message || "Something went wrong";
+    dispatch(usersRequestFailed(message));
+  }
+};
 export const unfollowUser =
   (follow: Follow, user?: User) => async (dispatch: AppDispatch) => {
     try {
@@ -180,6 +198,10 @@ export const getUserFollows =
   () =>
   (state: { users: UserState }): string[] | undefined =>
     state.users.user?.following;
+export const getUsers =
+  () =>
+  (state: { users: UserState }): UserMinData[] | undefined =>
+    state.users.users;
 
 export const getSearchedUsers = () => (state: { users: UserState }) =>
   state.users.searchedUsers;
@@ -199,6 +221,7 @@ const {
   usersRequestFailed,
   userReceived,
   userEdited,
+  usersReceived,
   userEditRequested,
   userSearchRequested,
   userFollowed,

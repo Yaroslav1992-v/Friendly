@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { PostWithLikes } from "../../../hoc/hooks/usePosts/usePost.types";
 import { checkIfLiked } from "../../../utils/helpers";
 import {
@@ -8,6 +8,7 @@ import {
 } from "./components";
 import { Picture } from "./components/Publication.props";
 import { PublicationContent } from "./components/PublicationContent";
+import { useParams } from "react-router-dom";
 
 export const Publication = (post: PostWithLikes) => {
   const { name, image, _id: userId } = post.userId;
@@ -18,10 +19,25 @@ export const Publication = (post: PostWithLikes) => {
     setPicture({ url: images[num].url, objectFit: images[num].objectFit });
     setSlide(num);
   };
-
+  const { postId } = useParams();
+  const postRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (post._id === postId && postRef.current) {
+      const topOffset = postRef.current.offsetTop - 50;
+      postRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
+      window.scrollTo({ top: topOffset, behavior: "smooth" });
+    }
+  }, []);
   return (
-    <article className="publication">
-      <PublicationHead userId={userId} name={name} avatar={image} />
+    <article id={post._id} ref={postRef} className="publication">
+      <PublicationHead
+        postId={post._id}
+        userId={userId}
+        name={name}
+        avatar={image}
+      />
       <PublicationImage
         fromToWhere={
           images.length > 1 ? { from: slide + 1, to: images.length } : undefined

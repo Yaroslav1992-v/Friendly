@@ -47,7 +47,7 @@ export const Chat = () => {
   );
   const [typing, setTyping] = useState<boolean>(false);
   const chat = useSelector(getChatById(chatId as string));
-  const [message, setMessage] = useState<string>();
+  const [message, setMessage] = useState<string>("");
   const currentUserId = localStorageService.getUserId() as string;
   const textRef = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
@@ -80,6 +80,7 @@ export const Chat = () => {
       };
       const createdMsg = await dispatch(createMessage(newMessage));
       setMessage("");
+      textRef.current!.style.height = 40 + "px";
       if (chat) {
         socket.emit("message", createdMsg);
         socket.on("users-count", async (users) => {
@@ -111,12 +112,16 @@ export const Chat = () => {
         socket.emit("stop-typing", { chatId, user: checkUser(chat)._id });
       }, 5000);
   };
+  const handleEmoji = (emoji: string) => {
+    setMessage((prevState) => prevState + emoji);
+  };
   const handleText = () => {
-    setMessage(textRef.current?.value);
+    if (textRef.current?.value) setMessage(textRef.current?.value);
     const height = textRef.current!.scrollHeight;
     if (textRef.current!.scrollHeight < 150) {
       textRef.current!.style.height = height + "px";
     }
+
     handleTyping();
   };
   const checkUser = (chat: IChat): UserMinData => {
@@ -148,8 +153,9 @@ export const Chat = () => {
               />
               {typing && <Typing />}
               <TextForm
+                handleEmoji={handleEmoji}
                 placeholder={"Your Message"}
-                value={message || ""}
+                value={message}
                 handleSubmit={handleSubmit}
                 handleText={handleText}
                 disabled={false}

@@ -61,7 +61,6 @@ export const Chats = () => {
             users={users}
             isLoading={isDataLoaded}
             data={handleCreateChat}
-            currentUser={currentUserId as string}
           />
         ) : (
           <ul className="chats__list">

@@ -51,6 +51,7 @@ export const AddPostPage = () => {
     const height = textRef.current!.scrollHeight;
     textRef.current!.style.height = height + "px";
   };
+  console.log(images);
   const dispatch = useAppDispatch();
   const handleSubmit = () => {
     if (images.length === 0) {

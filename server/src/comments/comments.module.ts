@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CommentModel } from './comment.model.ts/comment.model';
 import { JwtService } from 'src/jwt/jwt.service';
 import { PostModel } from 'src/posts/post.model/post.model';
+import { LikeModel } from 'src/likes/like.model/like.model';
 
 @Module({
   imports: [
@@ -14,6 +15,12 @@ import { PostModel } from 'src/posts/post.model/post.model';
         typegooseClass: CommentModel,
         schemaOptions: {
           collection: 'Comment',
+        },
+      },
+      {
+        typegooseClass: LikeModel,
+        schemaOptions: {
+          collection: 'Like',
         },
       },
       {

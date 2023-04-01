@@ -12,6 +12,10 @@
       }
     }
   }
+  &__data {
+    overflow: hidden;
+    max-width: 250px;
+  }
   &__item {
     margin-bottom: 10px;
   }
@@ -45,6 +49,8 @@
   &__date {
     color: $grey-100;
     margin-bottom: 5px;
+    font-size: 12px;
+    text-align: center;
   }
   &__unread {
     height: 20px;
@@ -109,6 +115,7 @@
     border-radius: 15px;
     max-width: 250px;
     display: flex;
+    word-wrap: break-word;
     flex-direction: column;
     &-user {
       align-items: end;

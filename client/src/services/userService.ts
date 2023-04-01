@@ -34,6 +34,10 @@ const userService = {
     );
     return data;
   },
+  findUsers: async (ids: string[]): Promise<UserMinData[]> => {
+    const { data } = await httpService.post(`${apiEndPoint}findUsers`, ids);
+    return data;
+  },
   followUser: async (follow: Follow) => {
     const { data } = await httpService.patch(`${apiEndPoint}follow`, follow);
     return data;

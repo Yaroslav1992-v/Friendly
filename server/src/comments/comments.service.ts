@@ -5,6 +5,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { PostModel } from 'src/posts/post.model/post.model';
 import { CommentModel } from './comment.model.ts/comment.model';
 import { CommentDto } from './dto/comment.dto';
+import { LikeModel } from 'src/likes/like.model/like.model';
 
 @Injectable()
 export class CommentsService {
@@ -13,6 +14,8 @@ export class CommentsService {
     private readonly commentModel: ModelType<CommentModel>,
     @InjectModel(PostModel)
     private readonly postModel: ModelType<PostModel>,
+    @InjectModel(LikeModel)
+    private readonly likeModel: ModelType<LikeModel>,
   ) {}
   async createComment(comment: CommentDto) {
     const newComment = (await this.commentModel.create(comment)).populate(
@@ -26,7 +29,7 @@ export class CommentsService {
     return newComment;
   }
   async removeComment(
-    commentId: string,
+    commentId: Types.ObjectId,
     userId: Types.ObjectId,
   ): Promise<void> {
     const comment = await this.commentModel.findOne({ _id: commentId });
@@ -38,8 +41,27 @@ export class CommentsService {
       { _id: comment.postId },
       { $pull: { comments: commentId } },
     );
-    await this.commentModel.deleteMany({ 'reply.parentId': commentId }).exec();
+    const replies = await this.commentModel.find({
+      'reply.parentId': commentId,
+    });
+    await this.commentModel.deleteMany({
+      'reply.parentId': commentId,
+    });
+    const commentIds = replies.map((comment) => comment._id);
+    commentIds.push(commentId);
+    const likes = await this.likeModel.deleteMany({
+      parentId: { $in: commentIds },
+    });
+    console.log(likes);
     await comment.delete();
+  }
+  async removeComments(postId: string): Promise<void> {
+    const comments = await this.commentModel.find({ postId });
+    const commentIds = comments.map((comment) => comment._id);
+    await Promise.all([
+      this.commentModel.deleteMany({ postId }),
+      this.likeModel.deleteMany({ parentId: { $in: commentIds } }),
+    ]);
   }
   async editComment(
     commentId: string,

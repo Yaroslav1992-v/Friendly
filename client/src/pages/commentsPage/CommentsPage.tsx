@@ -59,7 +59,9 @@ export const CommentsPage = () => {
   const textRef = useRef<HTMLTextAreaElement>(null);
   const [comment, setComment] = useState<string>();
   const userId = useSelector(getCurrentUserId());
-
+  const handleEmoji = (emoji: string) => {
+    setComment((prevState) => prevState + emoji);
+  };
   const handleText = () => {
     if (
       reply &&
@@ -126,6 +128,7 @@ export const CommentsPage = () => {
           comments={comments}
         />
         <TextForm
+          handleEmoji={handleEmoji}
           reply={reply?.name && reply.name}
           value={comment || ""}
           textRef={textRef}

@@ -10,6 +10,7 @@ import {
 import { AccountHeadTopProps } from "../../Account.props";
 import { AccountHeadAction } from "./AccountHeadAction";
 import {
+  CreateChatData,
   createNotificationData,
   Follow,
   NotificationType,
@@ -22,6 +23,8 @@ import {
   createNotification,
   removeNotificationsByType,
 } from "../../../../store/notificaton";
+import { createChat } from "../../../../store/chats";
+import { useNavigate } from "react-router-dom";
 export const AccountHeadTop = ({
   url,
   isFollowing,
@@ -29,7 +32,15 @@ export const AccountHeadTop = ({
   currentUserId,
 }: AccountHeadTopProps) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { socket } = UseApp();
+  const handleCreateChat = () => {
+    const chat: CreateChatData = {
+      firstUser: currentUserId as string,
+      secondUser: id,
+    };
+    dispatch(createChat(chat, navigate));
+  };
   const handleFollow = async () => {
     const follow: Follow = {
       followingId: id as string,
@@ -64,11 +75,11 @@ export const AccountHeadTop = ({
         <AccountHeadAction
           name="Add Post"
           Icon={<AddPostIcon />}
-          action={"/p/addPost"}
+          action={"/addPost"}
         />
       ) : (
         <AccountHeadAction
-          action={"/chat"}
+          action={handleCreateChat}
           Icon={<ChatIcon />}
           name="Message"
         />

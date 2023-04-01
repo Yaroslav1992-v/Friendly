@@ -16,10 +16,7 @@ export const AccountHead = ({ user, post }: { user: User; post: number }) => {
         id={user._id}
         url={user.image}
       />
-      <AccountHeadMiddle
-        name={user.name}
-        occupation={user.status || "Full Stack Developer"}
-      />
+      <AccountHeadMiddle name={user.name} occupation={user.status || ""} />
       <AccoundHeadBottom
         followers={user.followers.length}
         following={user.following.length}

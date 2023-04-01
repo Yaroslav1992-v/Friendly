@@ -32,6 +32,16 @@ const postService = {
       console.log(error);
     }
   },
+  removePost: async (postId: string): Promise<Post | undefined> => {
+    try {
+      const { data } = await httpService.delete(
+        `${apiEndPoint}removePost/${postId}`
+      );
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default postService;

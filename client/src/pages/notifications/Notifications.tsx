@@ -1,10 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  changeNotsToRead,
-  getNotifications,
-  getUnreadIds,
-} from "../../store/notificaton";
+import { getNotifications } from "../../store/notificaton";
 import { useSelector } from "react-redux";
 import {
   ArrowButton,
@@ -14,7 +10,6 @@ import {
   TopNavigation,
 } from "../../components";
 import { NotList } from "./components/NotList";
-import { useAppDispatch } from "../../store/createStore";
 
 export const Notifications = () => {
   const navigate = useNavigate();
@@ -24,7 +19,6 @@ export const Notifications = () => {
 
   const notifications = useSelector(getNotifications());
 
-  console.log(notifications);
   return (
     <section className="notifications">
       <Container background="white" name="container">

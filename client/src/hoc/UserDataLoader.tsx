@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
-import { Account, EditAccount, PublicationsPage } from "../pages";
+import { Account, EditAccount, PublicationsPage, Accounts } from "../pages";
 import { useAppDispatch } from "../store/createStore";
 import { getPostsByUserId } from "../store/post";
 import { loadUserData } from "../store/user";
@@ -20,7 +20,10 @@ const UserDataLoader = () => {
       <Routes>
         <Route index element={<Account />} />
         <Route path="/publications" element={<PublicationsPage />} />
+        <Route path="/publications/:postId" element={<PublicationsPage />} />
+
         <Route path="edit" element={<EditAccount />} />
+        <Route path=":users" element={<Accounts />} />
       </Routes>
     </>
   );

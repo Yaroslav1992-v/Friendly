@@ -37,7 +37,7 @@ export class NotificationService {
   async findAll(userId: string): Promise<NotificationModel[]> {
     const not = await this.notificationModel
       .find({ reciever: userId })
-      .sort({ createdAt: 'asc' })
+      .sort({ createdAt: 'desc' })
       .populate('author', 'name  image')
       .exec();
 
