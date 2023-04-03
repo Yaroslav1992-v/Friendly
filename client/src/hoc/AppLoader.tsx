@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Route, Routes } from "react-router-dom";
-import { StartPage, Notifications, CommentsPage, AddPostPage } from "../pages";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { StartPage, Notifications, CommentsPage } from "../pages";
 import localStorageService from "../services/localStorageService";
 import { getIsLoggedIn } from "../store/auth";
 import { useAppDispatch } from "../store/createStore";
@@ -30,7 +30,7 @@ const AppLoader = () => {
   const dispatch = useAppDispatch();
   const userId = localStorageService.getUserId();
   const currentUser = useSelector(getCurrentUser());
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(loadUserData(userId as string));
@@ -41,6 +41,8 @@ const AppLoader = () => {
       socket.on("notification", (data: Notification) => {
         dispatch(recieveNotification(data));
       });
+    } else {
+      navigate("/");
     }
   }, [isLoggedIn]);
   const contextValue: AppContextValue = {
@@ -70,7 +72,6 @@ const AppLoader = () => {
                 path="/p/:postId/comments/:commentId"
                 element={<CommentsPage />}
               />
-              {/* <Route path="/addPost" element={<AddPostPage />} /> */}
             </Routes>
           </AppContex.Provider>
         )}

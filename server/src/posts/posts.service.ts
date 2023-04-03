@@ -52,7 +52,7 @@ export class PostsService {
   }
   async removePost(postId: string): Promise<void> {
     const post = await this.postModel.findById(postId);
-    console.log(post);
+  
     if (post) {
       const files = post.images.map((i) => getPublicIdFromUrl(i.url));
       await this.fileServive.deleteImages(files);

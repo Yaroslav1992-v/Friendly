@@ -25,6 +25,8 @@ import {
 } from "../../../../store/notificaton";
 import { createChat } from "../../../../store/chats";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineLogout } from "react-icons/ai";
+import { logOut } from "../../../../store/auth";
 export const AccountHeadTop = ({
   url,
   isFollowing,
@@ -68,36 +70,50 @@ export const AccountHeadTop = ({
       socket.emit("notify", notification);
     }
   };
-
+  const handleLogout = () => {
+    logOut();
+    navigate("/");
+  };
   return (
     <div className="account__head-top">
-      {currentUserId === id ? (
-        <AccountHeadAction
-          name="Add Post"
-          Icon={<AddPostIcon />}
-          action={"/addPost"}
-        />
-      ) : (
-        <AccountHeadAction
-          action={handleCreateChat}
-          Icon={<ChatIcon />}
-          name="Message"
-        />
-      )}
+      <div className="account__head-top-box">
+        {currentUserId === id ? (
+          <AccountHeadAction
+            name="Add Post"
+            Icon={<AddPostIcon />}
+            action={"/addPost"}
+          />
+        ) : (
+          <AccountHeadAction
+            action={handleCreateChat}
+            Icon={<ChatIcon />}
+            name="Message"
+          />
+        )}
 
-      <Avatar size="XL" url={url} />
-      {currentUserId === id ? (
-        <AccountHeadAction
-          action={`/account/${id}/edit`}
-          Icon={<EditIcon />}
-          name="Edit"
-        />
-      ) : (
-        <AccountHeadAction
-          action={handleFollow}
-          Icon={<LoveIcon />}
-          name={isFollowing ? "Unfollow" : "Follow"}
-        />
+        <Avatar size="XL" url={url} />
+        {currentUserId === id ? (
+          <AccountHeadAction
+            action={`/account/${id}/edit`}
+            Icon={<EditIcon />}
+            name="Edit"
+          />
+        ) : (
+          <AccountHeadAction
+            action={handleFollow}
+            Icon={<LoveIcon />}
+            name={isFollowing ? "Unfollow" : "Follow"}
+          />
+        )}
+      </div>
+      {currentUserId === id && (
+        <div className="account__head-top-logout">
+          <AccountHeadAction
+            action={handleLogout}
+            Icon={<AiOutlineLogout />}
+            name="LogOut"
+          />
+        </div>
       )}
     </div>
   );

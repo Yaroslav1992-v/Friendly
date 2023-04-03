@@ -1,6 +1,5 @@
 import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import authService from "../services/authService";
-import localStorageService from "../services/localStorageService";
 import { Dispatch } from "./storeTypes";
 import {
   RegisterData,
@@ -12,6 +11,7 @@ import {
 import { AuthData } from "./../props/props";
 import userService from "../services/userService";
 import fileService from "../services/fileService";
+import localStorageService from "./../services/localStorageService";
 
 interface AuthState {
   isLoading: boolean;
@@ -119,6 +119,9 @@ export const loadCurrentUser = () => async (dispatch: Dispatch) => {
     const message = error.response?.data?.message || "Something went wrong";
     dispatch(authRequestFailed(message));
   }
+};
+export const logOut = () => {
+  localStorageService.removeAuthData();
 };
 export const getAuthError =
   () =>

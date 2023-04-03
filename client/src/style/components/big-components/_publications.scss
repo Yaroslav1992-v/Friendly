@@ -10,17 +10,18 @@
 .publication {
   position: relative;
   background-color: $white;
-
   width: 100%;
   &__head {
     display: flex;
     height: 75px;
+    position: relative;
     padding: 15px;
     &-user {
       color: $grey;
       font-weight: 600;
       font-size: 16px;
     }
+
     align-items: center;
     justify-content: space-between;
     &-content {
@@ -29,6 +30,16 @@
     &-info {
       display: flex;
     }
+  }
+  &__remove {
+    position: absolute;
+    color: $red;
+    font-weight: 600;
+    right: 0;
+    padding: 5px;
+    background-color: $white-100;
+    border-radius: 8px;
+    bottom: -10px;
   }
   &__image {
     max-width: 370px;

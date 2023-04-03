@@ -7,7 +7,7 @@ import {
   Navigation,
   TopNavigation,
 } from "../../components";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, Location } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AccountHead } from "./components/Head/AccountHead";
 import { Nav } from "./Account.props";
@@ -18,9 +18,14 @@ import { getUserData } from "./../../store/user";
 import { getPostsCount } from "../../store/post";
 
 export const Account = () => {
+  interface CurrentLocation extends Location {
+    from?: string;
+  }
   const navigate = useNavigate();
+  const { state }: CurrentLocation = useLocation();
   const goBack = () => {
-    navigate("/");
+    const to = state?.from ? state.from : "/";
+    navigate(to);
   };
   const [nav, setNav] = useState<Nav>("photos");
   const handleNav = () => {

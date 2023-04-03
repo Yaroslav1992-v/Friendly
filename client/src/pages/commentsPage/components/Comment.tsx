@@ -6,7 +6,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { MdModeEditOutline } from "react-icons/md";
 import { useAppDispatch } from "../../../store/createStore";
 import { editComment, removeComment } from "./../../../store/comment";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import localStorageService from "./../../../services/localStorageService";
 import { CommentEdit } from "./CommentEdit";
 import { CommentLikeBox } from "./CommentLikeBox";
@@ -27,6 +27,7 @@ export const Comment = ({
 }: CommentProps) => {
   const dispatch = useAppDispatch();
   const { commentId } = useParams();
+  const { pathname } = useLocation();
 
   const onDelete = (commentId: string) => {
     dispatch(removeComment(commentId));
@@ -58,6 +59,7 @@ export const Comment = ({
   const handleEdit = () => {
     setEdit((prevState) => !prevState);
   };
+
   const onEdit = (commentId: string) => {
     dispatch(editComment(commentId, data));
     setEdit(false);
@@ -76,9 +78,13 @@ export const Comment = ({
       }
       ref={commentRef}
     >
-      <div className="comment__avatar">
+      <Link
+        state={{ from: pathname }}
+        to={`/account/${comment.user._id}`}
+        className="comment__avatar"
+      >
         <Avatar url={user.image} size={nested ? "S" : "M"} />
-      </div>
+      </Link>
       {edit ? (
         <CommentEdit
           data={data}
@@ -90,9 +96,19 @@ export const Comment = ({
         />
       ) : (
         <div className="comment__container">
-          <h3 className="comment__user">{user.name}</h3>
+          <Link
+            to={`/account/${comment.user._id}`}
+            state={{ from: pathname }}
+            className="comment__user"
+          >
+            {user.name}
+          </Link>
           <div className="comment__text">
-            {nested && name && <Link to={`/account/${user._id}`}>@{name}</Link>}
+            {nested && name && (
+              <Link state={{ from: pathname }} to={`/account/${user._id}`}>
+                @{name}
+              </Link>
+            )}
             <p>{content}</p>
             <CommentLikeBox
               comment={comment}

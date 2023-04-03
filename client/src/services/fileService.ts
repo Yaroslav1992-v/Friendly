@@ -55,7 +55,6 @@ export const getPublicIdFromUrl = (imageUrl: string): string | undefined => {
   if (parts.length < 2) {
     return undefined;
   }
-
   const cloudNameAndPath = parts[1].split("/");
   const fileName = cloudNameAndPath[cloudNameAndPath.length - 1];
   const lastDotIndex = fileName.lastIndexOf(".");

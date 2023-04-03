@@ -13,11 +13,19 @@
       width: 100%;
     }
     &-top {
-      display: flex;
       width: 100%;
-      align-items: center;
-      justify-content: center;
       margin-bottom: 15px;
+      &-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+      }
+      &-logout {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+      }
     }
     .avatar {
       margin-right: 25px;
@@ -129,7 +137,7 @@
     }
     &-one {
       grid-template-columns: repeat(1, 1fr);
-      grid-template-rows: repeat(1, 100px);
+      grid-template-rows: repeat(1, 150px);
       .account__photos-item {
         &-one {
           grid-column: 1/2;

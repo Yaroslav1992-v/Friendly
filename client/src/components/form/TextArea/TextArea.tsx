@@ -3,7 +3,6 @@ import { TextAreaProps } from "./TextAreaProps";
 
 export const TextArea = ({
   textRef,
-
   placeholder,
   onChange,
   reply,

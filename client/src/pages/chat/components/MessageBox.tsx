@@ -9,6 +9,7 @@ export const MessageBox = ({ messages, currentUserId }: MessageBoxProps) => {
 
   useEffect(() => {
     if (bottomRef.current) {
+      
       bottomRef.current?.scrollIntoView({ behavior: "auto" });
     }
   }, [messages]);

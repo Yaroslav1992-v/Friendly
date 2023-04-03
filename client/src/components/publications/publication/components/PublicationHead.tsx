@@ -32,7 +32,7 @@ export const PublicationHead = ({
       </Link>
       <DotsBtn action={handleOpenRemove} />
       {openRemove && currentUser === userId && (
-        <button onClick={removePost} className="poblication">
+        <button onClick={removePost} className="publication__remove">
           Delete
         </button>
       )}

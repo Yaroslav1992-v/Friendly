@@ -25,8 +25,13 @@ export const StartPage = () => {
       <Container name="app-container" background="primary">
         <div className="start__container">
           <Logo size={!showForms ? "x-large" : "large"} />
-          {showForms && <FormType setForm={handleFormType} type={formType} />}
-          {formType === "login" ? <LoginForm /> : <RegisterForm />}
+          <></>
+          {showForms && (
+            <>
+              <FormType setForm={handleFormType} type={formType} />
+              {formType === "login" ? <LoginForm /> : <RegisterForm />}
+            </>
+          )}
         </div>
       </Container>
     </section>

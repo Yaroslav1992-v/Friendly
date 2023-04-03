@@ -9,6 +9,7 @@ export const PostTextArea = ({
   return (
     <div className="postTextArea">
       <textarea
+        autoFocus
         value={value}
         onChange={onChange}
         ref={textRef}

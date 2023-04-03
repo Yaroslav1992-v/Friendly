@@ -73,7 +73,6 @@ export class CommentsService {
     if (comment.user.toString() !== userId.toString()) {
       throw new NotFoundException(`Unathorized`);
     }
-
     comment.content = content;
     comment.save();
     return comment.populate('user', 'name image');

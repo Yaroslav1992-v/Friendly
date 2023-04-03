@@ -10,22 +10,23 @@ import {
   TopNavigation,
 } from "../../components";
 
-import { getUserData } from "../../store/user";
+import { getUserData, loadUserData } from "../../store/user";
 import { useSelector } from "react-redux";
+import { useAppDispatch } from "../../store/createStore";
 
 export const EditAccount = () => {
   const { userId } = useParams();
   const currentUserId = localStorageService.getUserId();
-
   const navigate = useNavigate();
+  const user = useSelector(getUserData());
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    if (currentUserId !== userId) {
+    if (currentUserId !== userId || user?._id !== userId) {
+      dispatch(loadUserData(userId as string));
       navigate(`/account/${currentUserId}/edit`);
     }
-  }, []);
+  }, [user]);
 
-  const user = useSelector(getUserData());
-  console.log(user);
   return (
     <section className="edit-page">
       <Container name="container" background="white">
