@@ -25,7 +25,7 @@ export const CommentsSlice = createSlice({
   initialState,
   reducers: {
     commentsRequested: (state: CommentsState) => {
-      state.isLoading = true;
+      state.dataLoaded = false;
     },
     commentsCreateRequested: (state: CommentsState) => {
       state.isLoading = true;
@@ -124,10 +124,10 @@ export const getComments =
   (state: { comments: CommentsState }): CommentData[] =>
     state.comments.comments;
 
-export const getCommentsLoading =
+export const getCommentsDataLoaded =
   () =>
   (state: { comments: CommentsState }): boolean =>
-    state.comments.isLoading;
+    state.comments.dataLoaded;
 
 const { reducer: commentsReducer, actions } = CommentsSlice;
 const {

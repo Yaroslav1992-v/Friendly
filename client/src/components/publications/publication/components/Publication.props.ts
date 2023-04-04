@@ -22,6 +22,7 @@ export interface ContentProps {
   text?: string;
   date: Date;
   postId: string;
+  pathName: string;
 }
 type fromToWhere = { from: number; to: number };
 export interface ActionsProps {
@@ -30,6 +31,8 @@ export interface ActionsProps {
   liked: string | boolean;
   userId: string;
   author: string;
+  postUserId: string;
+  pathName: string;
   postImage: string;
 }
 export type slider = { data: fromToWhere; slider: (num: number) => void };

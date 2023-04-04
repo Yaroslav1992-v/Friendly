@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  Location,
+} from "react-router-dom";
 
 import {
   ArrowButton,
@@ -23,8 +28,13 @@ import { Follow, User } from "../../props/props";
 
 export const Accounts = () => {
   const navigate = useNavigate();
+  interface CurrentLocation extends Location {
+    from?: string;
+  }
+  const { state }: CurrentLocation = useLocation();
   const goBack = () => {
-    navigate("/");
+    const to = state?.from ? state.from : "/";
+    navigate(to);
   };
   const params = useParams();
   const user = useSelector(getUserData());

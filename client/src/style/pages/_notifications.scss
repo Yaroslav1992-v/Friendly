@@ -16,8 +16,9 @@
     display: flex;
   }
   &__box {
-    padding-bottom: 15px;
     width: 100%;
+    padding: 0 10px;
+    padding-bottom: 15px;
   }
   &__user {
     &-images {
@@ -37,6 +38,7 @@
     flex-wrap: wrap;
     p {
       font-weight: 400;
+      word-wrap: break-word;
       color: $black;
     }
   }
@@ -44,6 +46,7 @@
     color: $black;
     font-weight: 600;
     margin-right: 5px;
+    word-wrap: break-word;
   }
   &__date {
     font-size: 13px;

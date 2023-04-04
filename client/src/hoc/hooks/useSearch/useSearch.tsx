@@ -11,6 +11,7 @@ import {
 import { checkString } from "../../../utils/helpers";
 import ChatLoader from "../../ChatLoader";
 import { SearchContextValue } from "./useSearch.types";
+import localStorageService from "../../../services/localStorageService";
 
 const SearchContext = React.createContext<SearchContextValue>({
   searchQuery: "",
@@ -35,9 +36,10 @@ export const SearchProvider: React.FC = () => {
   const dispatch = useAppDispatch();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchQueries, setSearchQueries] = useState<string[]>([]);
+  const currentUserId = localStorageService.getUserId();
   const searchedUsers = useSelector(getSearchedUsers());
-  const filteredUsers = searchedUsers.filter((u) =>
-    checkString(searchQuery, u.name)
+  const filteredUsers = searchedUsers.filter(
+    (u) => checkString(searchQuery, u.name) && u._id !== currentUserId
   );
   const isDataLoaded = useSelector(getIsDataLoaded());
   const handleReset = () => {

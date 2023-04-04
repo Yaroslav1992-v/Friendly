@@ -70,8 +70,9 @@ export const AccountHeadTop = ({
       socket.emit("notify", notification);
     }
   };
+
   const handleLogout = () => {
-    logOut();
+    dispatch(logOut());
     navigate("/");
   };
   return (

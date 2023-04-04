@@ -25,8 +25,6 @@ export const EditForm = ({ user }: editFormProps) => {
       setImageError({ image: "Max File Size is 3mb" });
       return;
     }
-    console.log(isLoading);
-
     const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
     if (!allowedExtensions.exec(file.name)) {
       setErrors({

@@ -23,24 +23,14 @@ const postService = {
     return data;
   },
   loadPost: async (postId: string): Promise<Post | undefined> => {
-    try {
-      const { data } = await httpService.get(
-        `${apiEndPoint}loadPost/${postId}`
-      );
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
+    const { data } = await httpService.get(`${apiEndPoint}loadPost/${postId}`);
+    return data;
   },
   removePost: async (postId: string): Promise<Post | undefined> => {
-    try {
-      const { data } = await httpService.delete(
-        `${apiEndPoint}removePost/${postId}`
-      );
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
+    const { data } = await httpService.delete(
+      `${apiEndPoint}removePost/${postId}`
+    );
+    return data;
   },
 };
 

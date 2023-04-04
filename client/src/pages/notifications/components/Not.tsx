@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Avatar } from "../../../components";
 import { NotificationsGroup } from "../../../props/props";
 import { NotInfo } from "./Notifications.prop";
@@ -10,11 +10,21 @@ import { useAppDispatch } from "../../../store/createStore";
 import { removeNotifications } from "../../../store/notificaton";
 
 export const Not = ({ not }: { not: NotificationsGroup }) => {
-  const { author, reciever, typeId, type, authors, createdAt, isRead } = not;
+  const {
+    author,
+    reciever,
+    typeId,
+    type,
+    authors,
+    createdAt,
+    isRead,
+    notificationsId,
+  } = not;
   const [notInfo, setNotInfo] = useState<NotInfo>({
     link: "",
     content: "",
   });
+  const { pathname } = useLocation();
   const dispatch = useAppDispatch();
   useEffect(() => {
     renderNotInfo();
@@ -77,7 +87,11 @@ export const Not = ({ not }: { not: NotificationsGroup }) => {
   };
   return (
     <div className={"notifications__not " + (!isRead ? "unread" : "")}>
-      <Link to={notInfo.link} className="notifications__link">
+      <Link
+        to={notInfo.link}
+        state={{ from: pathname }}
+        className="notifications__link"
+      >
         <NotUserImage
           firstUser={author.image || ""}
           secondUser={not.authors[0]?.image || ""}
@@ -87,6 +101,10 @@ export const Not = ({ not }: { not: NotificationsGroup }) => {
             <h3 className="notifications__title">
               {author.name}{" "}
               {authors.length > 0 ? `and ${not.authors[0]?.name}` : ""}
+              {notificationsId.length > 2 &&
+                ` and ${notificationsId.length - 2} ${
+                  notificationsId.length - 2 === 1 ? "more" : "others"
+                } `}
             </h3>
             <p>{notInfo.content}</p>
           </div>

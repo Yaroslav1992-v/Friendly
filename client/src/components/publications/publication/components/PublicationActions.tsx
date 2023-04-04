@@ -22,6 +22,8 @@ export const PublicationActions = ({
   liked,
   postImage,
   slider,
+  postUserId,
+  pathName,
   author,
   userId,
 }: ActionsProps) => {
@@ -41,16 +43,17 @@ export const PublicationActions = ({
         type: "post",
       };
       dispatch(createLike(like));
-
-      const notif: createNotificationData = {
-        author: userId,
-        content: postImage,
-        type: NotificationType.PostLike,
-        reciever: author,
-        typeId: postId,
-      };
-      const notification = await dispatch(createNotification(notif));
-      socket.emit("notify", notification);
+      if (postUserId !== userId) {
+        const notif: createNotificationData = {
+          author: userId,
+          content: postImage,
+          type: NotificationType.PostLike,
+          reciever: author,
+          typeId: postId,
+        };
+        const notification = await dispatch(createNotification(notif));
+        socket.emit("notify", notification);
+      }
     }
     //  }
   };
@@ -63,7 +66,7 @@ export const PublicationActions = ({
       >
         <ActionBtn action={likePost} Icon={<LikeIcon />} />
         <ActionBtn
-          action={{ to: `/p/${postId}/comments`, from: "/" }}
+          action={{ to: `/p/${postId}/comments`, from: pathName }}
           Icon={<CommentIcon />}
         />
         <ActionBtn action={action} Icon={<ShareIcon />} />

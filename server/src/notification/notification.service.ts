@@ -27,11 +27,9 @@ export class NotificationService {
     return deletedNot.deletedCount;
   }
   async removeNotifications(notsIds: string[]): Promise<number> {
-    console.log(notsIds);
     const deletedNot = await this.notificationModel.deleteMany({
       _id: { $in: notsIds },
     });
-    console.log(deletedNot);
     return deletedNot.deletedCount;
   }
   async findAll(userId: string): Promise<NotificationModel[]> {

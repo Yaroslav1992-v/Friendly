@@ -12,7 +12,16 @@ import { useParams } from "react-router-dom";
 
 export const Publication = (post: PostWithLikes) => {
   const { name, image, _id: userId } = post.userId;
-  const { images, currentUser, likes, _id, comments, text, createdAt } = post;
+  const {
+    images,
+    currentUser,
+    likes,
+    _id,
+    comments,
+    text,
+    createdAt,
+    pathName,
+  } = post;
   const [picture, setPicture] = useState<Picture>(images[0]);
   const [slide, setSlide] = useState<number>(0);
   const handleImage = (num: number) => {
@@ -23,7 +32,7 @@ export const Publication = (post: PostWithLikes) => {
   const postRef = useRef<HTMLElement>(null);
   useEffect(() => {
     if (post._id === postId && postRef.current) {
-      const topOffset = postRef.current.offsetTop - 50;
+      const topOffset = postRef.current.offsetTop - 0;
       postRef.current.scrollIntoView({
         behavior: "smooth",
       });
@@ -46,8 +55,10 @@ export const Publication = (post: PostWithLikes) => {
         url={picture.url}
       />
       <PublicationActions
+        pathName={pathName}
         postImage={post.images[0].url}
         liked={checkIfLiked(_id, currentUser, likes)}
+        postUserId={post.userId._id}
         author={userId}
         userId={currentUser}
         postId={_id}
@@ -61,6 +72,7 @@ export const Publication = (post: PostWithLikes) => {
         }
       />
       <PublicationContent
+        pathName={pathName}
         postId={_id}
         likes={likes.length}
         comments={comments.length}

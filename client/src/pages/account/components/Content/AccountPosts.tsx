@@ -9,14 +9,17 @@ export const AccountPosts = ({ userId }: { userId: string }) => {
     <ul className="account__posts">
       {images.map((item, i) => (
         <li key={i} className="account__posts-item">
-          <Link state={{ from: `/account/${userId}` }} to={"publications"}>
+          <Link
+            state={{ from: `/account/${userId}` }}
+            to={`publications/${i > 0 ? item.postId : ""}`}
+          >
             <img
-              src={`${item[0].url}`}
+              src={`${item.images[0].url}`}
               alt="pic"
-              className={`account__posts-photo ${item[0].objectFit}`}
+              className={`account__posts-photo ${item.images[0].objectFit}`}
             />
           </Link>
-          {item.length > 1 && <GrGallery />}
+          {item.images.length > 1 && <GrGallery />}
         </li>
       ))}
     </ul>

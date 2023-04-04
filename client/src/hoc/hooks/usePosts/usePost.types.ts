@@ -16,6 +16,7 @@ export interface Post extends PostData {
 export interface PostWithLikes extends Post {
   currentUser: string;
   likes: LikeData[];
+  pathName: string;
 }
 export interface Images extends File {
   objectFit: ObjectFit;

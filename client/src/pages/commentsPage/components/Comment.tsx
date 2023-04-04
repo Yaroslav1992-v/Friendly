@@ -49,7 +49,7 @@ export const Comment = ({
 
   useEffect(() => {
     if (comment._id === commentId && commentRef.current) {
-      const topOffset = commentRef.current.offsetTop - 100;
+      const topOffset = commentRef.current.offsetTop - 50;
       commentRef.current.scrollIntoView({
         behavior: "smooth",
       });

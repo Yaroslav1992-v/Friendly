@@ -6,6 +6,7 @@ import { formatDate } from "../../../../utils/helpers";
 export const PublicationContent = ({
   likes,
   postId,
+  pathName,
   comments,
   text,
   date,
@@ -47,6 +48,7 @@ export const PublicationContent = ({
         <Link
           className="publication__content-link"
           to={`/p/${postId}/comments`}
+          state={{ from: pathName }}
         >
           View {comments} comments
         </Link>

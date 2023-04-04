@@ -55,7 +55,6 @@ export const createChat =
       dispatch(createChatAction());
       const newChat = await chatService.createChat(data);
       dispatch(chatCreated(newChat));
-      console.log(newChat);
       navigate(`/chats/${newChat._id}`);
     } catch (error: any) {
       const message = error.response?.data?.message || "Something went wrong";

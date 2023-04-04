@@ -5,6 +5,7 @@ import fileService from "../services/fileService";
 import {
   createPostData,
   Images,
+  ObjectFit,
   Post,
 } from "../hoc/hooks/usePosts/usePost.types";
 import postService from "../services/postService";
@@ -171,9 +172,16 @@ export const getPostsIds =
 
 export const getPostsCount = () => (state: { posts: PostState }) =>
   state.posts.posts.length;
-
-export const getPostImagesArray = () => (state: { posts: PostState }) =>
-  state.posts.posts.map((p) => p.images);
+interface PostImageArray {
+  postId: string;
+  images: { url: string; objectFit: ObjectFit }[];
+}
+export const getPostImagesArray =
+  () =>
+  (state: { posts: PostState }): PostImageArray[] =>
+    state.posts.posts.map((p) => {
+      return { postId: p._id, images: p.images };
+    });
 export const getPosts =
   (kind: "feed" | "posts") => (state: { posts: PostState }) =>
     kind === "posts" ? state.posts.posts : state.posts.feedPosts;

@@ -48,7 +48,6 @@ export const authSlice = createSlice({
     },
     userReceived: (state: AuthState, action: PayloadAction<UserData>) => {
       state.dataLoaded = true;
-      console.log("dis");
       state.currentUser = action.payload;
       state.isLoading = false;
     },
@@ -68,8 +67,12 @@ export const authSlice = createSlice({
       state.error = action.payload;
       state.isLoading = false;
     },
+    loggedOut: (state: AuthState) => {
+      state.isLoggedIn = false;
+    },
   },
 });
+
 export const signUp = (payload: RegisterData) => async (dispatch: Dispatch) => {
   let image: string = "";
   try {
@@ -120,7 +123,8 @@ export const loadCurrentUser = () => async (dispatch: Dispatch) => {
     dispatch(authRequestFailed(message));
   }
 };
-export const logOut = () => {
+export const logOut = () => (dispatch: Dispatch) => {
+  dispatch(loggedOut());
   localStorageService.removeAuthData();
 };
 export const getAuthError =
@@ -152,8 +156,13 @@ export const getCurrentUserImage =
     state.auth.currentUser?.image;
 
 const { reducer: authReducer, actions } = authSlice;
-const { authRequestSuccess, authRequested, authRequestFailed, userReceived } =
-  actions;
+const {
+  authRequestSuccess,
+  loggedOut,
+  authRequested,
+  authRequestFailed,
+  userReceived,
+} = actions;
 export const getCurrentUserFollows =
   () =>
   (state: { auth: AuthState }): string[] | undefined =>
